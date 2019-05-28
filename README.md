@@ -3,7 +3,7 @@
 ## Installing
 Currently only been test with python version 3.6.1 and above.
 
-`pip install fiesta-id`
+`pip install fiesta-nlp`
 
 To run the notebooks as well requires installing the following dependencies through the [requirements](./requirements.txt) file:
 
