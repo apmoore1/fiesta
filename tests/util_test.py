@@ -82,3 +82,13 @@ def test_belief_calc():
         belief_calc(est_means, est_variances, eval_counts, samples)
     eval_counts = np.array([3, 3, 3])
     belief_calc(est_means, est_variances, eval_counts, samples)
+
+    # Test that the default samples value works
+    est_means = np.array([9, 10, 8])
+    est_variances = np.array([0.9, 1.2, 1.0])
+    eval_counts = np.array([10, 6, 12])
+    samples = 10000
+    pi_values = belief_calc(est_means, est_variances, eval_counts)
+    assert pi_values[1] > pi_values[0]
+    assert pi_values[1] > pi_values[2]
+    assert pi_values[0] > pi_values[2]
