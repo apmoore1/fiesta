@@ -16,7 +16,7 @@ We welcome any contributions. If you would like to contribute via a feature requ
 ### Requirements file's explained
 The [requirements](./requirements.txt) stores all of the dependencies to ensure the whole package will run and tests **as well as the notebooks**.
 
-The [requirements](./requirements.txt) stores only the requirements needed for the package and tests and is therefore used by travis to ensure the tests will pass. This also stores the *pylint* dependency which is the linter used for this package.
+The [package requirements](./package_requirements.txt) stores only the requirements needed for the package and tests and is therefore used by travis to ensure the tests will pass. This also stores the *pylint* dependency which is the linter used for this package.
 
 ### Linter
 We use the *pylint* linter of which we would like all contributions to adhere/keep to this linter.
