@@ -42,7 +42,7 @@ def test_belief_calc():
     assert pi_values[2] > pi_values[1]
     assert pi_values[0] > pi_values[2] 
     # Should return in essence a probabilty of the most confident model
-    assert sum(pi_values) == 1
+    assert np.isclose(sum(pi_values), 1)
 
     # Case where there are 3 very distinct models
     est_means = np.array([9, 10, 8])
@@ -53,7 +53,7 @@ def test_belief_calc():
     assert pi_values[1] > pi_values[0]
     assert pi_values[1] > pi_values[2]
     assert pi_values[0] > pi_values[2] 
-    assert sum(pi_values) == 1
+    assert np.isclose(sum(pi_values), 1)
 
     # Case of just one winner
     est_means = np.array([10, 2])
@@ -62,7 +62,7 @@ def test_belief_calc():
     samples = 10000
     pi_values = belief_calc(est_means, est_variances, eval_counts, samples)
     assert pi_values[0] > pi_values[1] 
-    assert sum(pi_values) == 1
+    assert np.isclose(sum(pi_values), 1)
 
     # Should work with only one but defeats the point of model evaluation
     est_means = np.array([10])
@@ -71,7 +71,7 @@ def test_belief_calc():
     samples = 10000
     pi_values = belief_calc(est_means, est_variances, eval_counts, samples)
     assert len(pi_values) == 1
-    assert sum(pi_values) == 1
+    assert np.isclose(sum(pi_values), 1)
 
     # Should raise an error if any of the eval_counts are less than 3
     est_means = np.array([9, 10, 8])
@@ -97,7 +97,7 @@ def test_belief_calc():
     assert pi_values[1] > pi_values[0]
     assert pi_values[1] > pi_values[2]
     assert pi_values[0] > pi_values[2]
-    assert sum(pi_values) == 1
+    assert np.isclose(sum(pi_values), 1)
 
 def test_lists_same_size():
     # one list example
