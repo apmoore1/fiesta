@@ -50,7 +50,7 @@ def TTTS(data: List[Dict[str, Any]],
                            data split, you can hard code this function to 
                            produce a set split each time.
     :param p_value: The significance value for the best model to be truely the 
-                    best model e.g. 0.05 if you want to be 95% confident.
+                    best model e.g. 0.05 if you want to be at least 95% confident.
     :param logit_transform: Whether to transform the model function's returned 
                             metric score by the logit function.
     :param samples: Number of samples to generate from our belief distribution 
