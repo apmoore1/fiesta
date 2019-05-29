@@ -62,7 +62,7 @@ def TTTS(data: List[Dict[str, Any]],
               The number of times each model was evaluated as a proportion of 
               the number of evaluations, 3. The total number of model 
               evaluations. 
-    :raises ValueError: If the confidence level is not between 0 and 1.
+    :raises ValueError: If the p value is not between 0 and 1.
     '''
     if p_value < 0.0 or p_value > 1.0:
         raise ValueError('The p value has to be between 0 and 1 and '
