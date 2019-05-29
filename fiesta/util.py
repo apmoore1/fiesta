@@ -42,8 +42,8 @@ def belief_calc(est_means: np.ndarray, est_variances: np.ndarray,
     :returns: The number of times a model performed best for each sample 
               based on each model belief distribution, normliased by the 
               number of samples (this is in affect the confidence for each 
-              model of whether that model is the best model p-value can be 
-              calculated by 1 - the confidence value). 
+              model of whether that model is the best model, p-value can be 
+              calculated by 1 - the confidence value for each model). 
               shape (Number of models,)
     :raises ValueError: If the eval_counts contains values less than 3. As 
                         it is required that each model has been evaluated a
