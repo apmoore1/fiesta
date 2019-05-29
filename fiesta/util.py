@@ -11,6 +11,8 @@ Functions:
    (this is in affect the confidence for each model of whether that model is 
    the best model p-value can be calculated by 1 - the confidence value). 
    shape (Number of models,)
+3. lists_same_size -- Checks if the lists given as arguments are of the same 
+   size, if not it raises a ValueError.
 '''
 from typing import List
 
@@ -75,3 +77,19 @@ def belief_calc(est_means: np.ndarray, est_variances: np.ndarray,
         else:
             pi[model_index] = 0 / samples
     return pi
+
+def lists_same_size(*lists) -> None:
+    '''
+    Checks if the lists given as arguments are of the same size, if not it 
+    raises a ValueError.
+
+    :raises ValueError: If any of the lists are not the same size
+    '''
+    list_length = -1
+    for _list in lists:
+        current_list_length = len(_list)
+        if list_length == -1:
+            list_length = current_list_length
+        else:
+            if list_length != current_list_length:
+                raise ValueError(f'The lists are not of the same size: {lists}')

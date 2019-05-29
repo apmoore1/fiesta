@@ -4,7 +4,7 @@ from typing import List
 import pytest
 import numpy as np
 
-from fiesta.util import pull_arm, belief_calc
+from fiesta.util import pull_arm, belief_calc, lists_same_size
 
 @pytest.mark.parametrize("mean", (2, 3, 10, 0.7))
 @pytest.mark.parametrize("sd", (0.2, 0.31, 1.4))
@@ -92,3 +92,23 @@ def test_belief_calc():
     assert pi_values[1] > pi_values[0]
     assert pi_values[1] > pi_values[2]
     assert pi_values[0] > pi_values[2]
+
+def test_lists_same_size():
+    # one list example
+    list_0 = [1, 2, 3]
+    lists_same_size(list_0)
+
+    # three list example that should pass
+    list_1 = ['another', 'day', 'today']
+    list_2 = [1.0, 5.2, {'another': 1}]
+    lists_same_size(list_0, list_1, list_2)
+
+    # Case when the lists are not the same size
+    list_3 = [1]
+    with pytest.raises(ValueError):
+        lists_same_size(list_0, list_2, list_3)
+    
+    # Empty list
+    lists_same_size([])
+    # Empty lists
+    lists_same_size([], [])
