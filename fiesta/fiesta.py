@@ -3,7 +3,9 @@ Module that contains the main fiesta functions.
 
 Functions:
 
-TTTS - Top-Two Thompson Sampling
+1. TTTS -- Top-Two Thompson Sampling an efficient model evaluation function that 
+   stops when the best model has been found with a confidence score >
+   (1 - p_value). 
 '''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
@@ -23,14 +25,9 @@ def TTTS(data: List[Dict[str, Any]],
          p_value: float, logit_transform: bool = False, samples: int = 100000
          ) -> Tuple[List[float], List[float], int]:
     '''
-    This function requires as input at least some sort of List of method functions
-    or perhaps more selectively a List of AllenNLP config path, then secondly 
-    a data soucre of which we should allow them to give it optionally as a 
-    train test split or not then lastly wether or not to 
-    randomly split the data.
-
-    Whether the model requires a development split is up to the method 
-    functions
+    Top-Two Thompson Sampling an efficient model evaluation function that 
+    stops when the best model has been found with a confidence score > 
+    (1 - p_value). 
 
     :param data: A list of dictionaries, that as a whole represents the entire 
                  dataset. Each dictionary should within the list represents 
