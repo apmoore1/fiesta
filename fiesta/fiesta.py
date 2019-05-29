@@ -4,8 +4,10 @@ Module that contains the main fiesta functions.
 Functions:
 
 1. TTTS -- Top-Two Thompson Sampling an efficient model evaluation function that 
-   stops when the best model has been found with a confidence score >
-   (1 - p_value). 
+   stops when the best model from a set of models has been found with a 
+   confidence score > (1 - p_value). 
+2. sequential_halving -- Sequential Halving finds the best model out of the set 
+   of models given a set budget of T evaluations.
 '''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
@@ -26,8 +28,8 @@ def TTTS(data: List[Dict[str, Any]],
          ) -> Tuple[List[float], List[float], int]:
     '''
     Top-Two Thompson Sampling an efficient model evaluation function that 
-    stops when the best model has been found with a confidence score > 
-    (1 - p_value). 
+    stops when the best model from a set of models has been found with a 
+    confidence score > (1 - p_value). 
 
     :param data: A list of dictionaries, that as a whole represents the entire 
                  dataset. Each dictionary should within the list represents 
