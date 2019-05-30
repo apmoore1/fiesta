@@ -4,8 +4,9 @@ import statistics
 import numpy as np
 from flaky import flaky
 import pytest
+from scipy.special import expit
 
-from fiesta.fiesta import TTTS
+from fiesta.fiesta import TTTS, sequential_halving
 
 def split_data(data: List[Dict[str, Any]]
                ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
@@ -43,6 +44,37 @@ def model_generator(mean: float, sd: float
         return abs(train_mean - test_mean)
     return model_func
 
+@flaky
+@pytest.mark.parametrize("logit_transform", (True, False))
+def test_sequential_halving(logit_transform: bool):
+    train_test_data = list(np.random.normal(0.5, 0.01, 500))
+    train_test_json = [{'x': sample} for sample in train_test_data]
+    # model 2 > model 1 > model 0
+    model_0 = model_generator(0.17, 0.03)
+    model_1 = model_generator(0.1, 0.02)
+    model_2 = model_generator(0.15, 0.05)
+    model_3 = model_generator(0.3, 0.02)
+    model_4 = model_generator(0.27, 0.02)
+    models = [model_0, model_1, model_2, model_3, model_4]
+
+    budget = 25
+
+    best_model, model_prop, models_evaluations = sequential_halving(train_test_json, 
+                                                                    models, split_data, budget,
+                                                                    logit_transform=logit_transform)
+    assert best_model == 3
+    assert np.isclose(sum(model_prop), 1.0)
+    total_evaluations = sum([len(model_evaluations) for model_evaluations in models_evaluations])
+    assert total_evaluations <= budget
+
+    for model_evaluations in models_evaluations:
+        for score in model_evaluations:
+            if logit_transform:
+                score = expit(score)
+            assert score >= 0
+            assert score <= 1
+
+
 @flaky(max_runs=5, min_passes=4)
 def test_TTTS_confidence_scores():
     train_test_data = list(np.random.normal(0.5, 0.01, 500))
@@ -53,19 +85,23 @@ def test_TTTS_confidence_scores():
     model_2 = model_generator(0.3, 0.02)
     models = [model_0, model_1, model_2]
 
-    model_confidence_scores, model_prop, total_evals = TTTS(train_test_json, models, 
-                                                            split_data, 0.05)
+    model_confidence_scores, model_prop, total_evals, _ = TTTS(train_test_json, models, 
+                                                               split_data, 0.05)
+    # If less than 10 then it never did any thompson sampling
     assert total_evals > 10
+    # Model proportion should be a probability
     assert np.isclose(sum(model_prop), 1.0)
     assert sum([prop * total_evals for prop in model_prop]) == total_evals
     assert np.argmax(model_confidence_scores) == 2
-    #assert np.argsort(model_confidence_scores).tolist() == [0, 1, 2]
+    # The best model should have the most runs
+    assert np.argmax(model_prop) != 0
 
     models = [model_1, model_2, model_0]
-    model_confidence_scores, _, total_evals = TTTS(train_test_json, models, split_data, 0.05)
+    model_confidence_scores, model_prop, total_evals, _ = TTTS(train_test_json, models, split_data, 0.05)
     assert total_evals > 10
     assert np.argmax(model_confidence_scores) == 1
-    #assert np.argsort(model_confidence_scores).tolist() == [2, 0, 1]
+    # The best model should have the most runs
+    assert np.argmax(model_prop) != 2
 
 @flaky(max_runs=5, min_passes=3)
 @pytest.mark.parametrize("logit_transform", (True, False))
@@ -80,8 +116,8 @@ def test_TTTS_num_runs(logit_transform: bool):
     model_3 = model_generator(0.3, 0.03)
     models = [model_0, model_1, model_2, model_3]
 
-    _, _ , total_easy_evals = TTTS(train_test_json, models, split_data, 0.15, 
-                                   logit_transform=logit_transform)
+    _, _ , total_easy_evals, _ = TTTS(train_test_json, models, split_data, 0.15, 
+                                      logit_transform=logit_transform)
 
     model_0 = model_generator(0.26, 0.03)
     model_1 = model_generator(0.28, 0.01)
@@ -89,14 +125,14 @@ def test_TTTS_num_runs(logit_transform: bool):
     model_3 = model_generator(0.3, 0.05)
     models = [model_0, model_1, model_2, model_3]
 
-    _, _ , total_hard_evals = TTTS(train_test_json, models, split_data, 0.15,
-                                   logit_transform=logit_transform)
+    _, _ , total_hard_evals, _ = TTTS(train_test_json, models, split_data, 0.15,
+                                      logit_transform=logit_transform)
 
     assert total_hard_evals > total_easy_evals
 
     # With a higher p value it should take fewer runs
-    _, _ , total_smaller_p_evals = TTTS(train_test_json, models, split_data, 0.4,
-                                        logit_transform=logit_transform)
+    _, _ , total_smaller_p_evals, _ = TTTS(train_test_json, models, split_data, 0.4,
+                                           logit_transform=logit_transform)
 
     assert total_hard_evals > total_smaller_p_evals
 
@@ -115,5 +151,26 @@ def test_TTTS_p_value(p_value: float):
 
     with pytest.raises(ValueError):
         TTTS(train_test_json, models, split_data, p_value)
+
+@pytest.mark.parametrize("logit_transform", (True, False))
+def test_TTTS_evaluation_results(logit_transform: bool):
+    train_test_data = list(np.random.normal(0.5, 0.01, 500))
+    train_test_json = [{'x': sample} for sample in train_test_data]
+
+    model_0 = model_generator(0.11, 0.05)
+    model_1 = model_generator(0.2, 0.04)
+    model_2 = model_generator(0.3, 0.03)
+    models = [model_0, model_1, model_2]
+    _, _, _, models_evaluations = TTTS(train_test_json, models, split_data, 0.2,
+                                       logit_transform=logit_transform)
+    
+    for model_evaluations in models_evaluations:
+        for score in model_evaluations:
+            if logit_transform:
+                score = expit(score)
+            assert score >= 0
+            assert score <= 1
+
+
 
     
