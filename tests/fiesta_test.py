@@ -43,29 +43,31 @@ def model_generator(mean: float, sd: float
         return abs(train_mean - test_mean)
     return model_func
 
-@flaky(max_runs=5, min_passes=1)
+@flaky(max_runs=5, min_passes=4)
 def test_TTTS_confidence_scores():
     train_test_data = list(np.random.normal(0.5, 0.01, 500))
     train_test_json = [{'x': sample} for sample in train_test_data]
     # model 2 > model 1 > model 0
-    model_0 = model_generator(0.18, 0.05)
-    model_1 = model_generator(0.25, 0.04)
-    model_2 = model_generator(0.3, 0.03)
+    model_0 = model_generator(0.17, 0.03)
+    model_1 = model_generator(0.27, 0.02)
+    model_2 = model_generator(0.3, 0.02)
     models = [model_0, model_1, model_2]
 
     model_confidence_scores, model_prop, total_evals = TTTS(train_test_json, models, 
-                                                            split_data, 0.1)
+                                                            split_data, 0.05)
+    assert total_evals > 10
     assert np.isclose(sum(model_prop), 1.0)
     assert sum([prop * total_evals for prop in model_prop]) == total_evals
     assert np.argmax(model_confidence_scores) == 2
-    assert np.argsort(model_confidence_scores).tolist() == [0, 1, 2]
+    #assert np.argsort(model_confidence_scores).tolist() == [0, 1, 2]
 
     models = [model_1, model_2, model_0]
-    model_confidence_scores, _, _ = TTTS(train_test_json, models, split_data, 0.1)
+    model_confidence_scores, _, total_evals = TTTS(train_test_json, models, split_data, 0.05)
+    assert total_evals > 10
     assert np.argmax(model_confidence_scores) == 1
-    assert np.argsort(model_confidence_scores).tolist() == [2, 0, 1]
+    #assert np.argsort(model_confidence_scores).tolist() == [2, 0, 1]
 
-@flaky(max_runs=5, min_passes=1)
+@flaky(max_runs=5, min_passes=3)
 @pytest.mark.parametrize("logit_transform", (True, False))
 def test_TTTS_num_runs(logit_transform: bool):
     train_test_data = list(np.random.normal(0.5, 0.01, 500))
@@ -73,25 +75,27 @@ def test_TTTS_num_runs(logit_transform: bool):
     # with three very easy to distinguish models it should have very few 
     # number of evals compared to models that output similar scores
     model_0 = model_generator(0.11, 0.05)
-    model_1 = model_generator(0.2, 0.04)
-    model_2 = model_generator(0.3, 0.03)
-    models = [model_0, model_1, model_2]
+    model_1 = model_generator(0.15, 0.01)
+    model_2 = model_generator(0.2, 0.04)
+    model_3 = model_generator(0.3, 0.03)
+    models = [model_0, model_1, model_2, model_3]
 
-    _, _ , total_easy_evals = TTTS(train_test_json, models, split_data, 0.1, 
+    _, _ , total_easy_evals = TTTS(train_test_json, models, split_data, 0.15, 
                                    logit_transform=logit_transform)
 
     model_0 = model_generator(0.26, 0.03)
     model_1 = model_generator(0.28, 0.01)
-    model_2 = model_generator(0.3, 0.05)
-    models = [model_0, model_1, model_2]
+    model_2 = model_generator(0.29, 0.02)
+    model_3 = model_generator(0.3, 0.05)
+    models = [model_0, model_1, model_2, model_3]
 
-    _, _ , total_hard_evals = TTTS(train_test_json, models, split_data, 0.1,
+    _, _ , total_hard_evals = TTTS(train_test_json, models, split_data, 0.15,
                                    logit_transform=logit_transform)
 
     assert total_hard_evals > total_easy_evals
 
     # With a higher p value it should take fewer runs
-    _, _ , total_smaller_p_evals = TTTS(train_test_json, models, split_data, 0.2,
+    _, _ , total_smaller_p_evals = TTTS(train_test_json, models, split_data, 0.4,
                                         logit_transform=logit_transform)
 
     assert total_hard_evals > total_smaller_p_evals
