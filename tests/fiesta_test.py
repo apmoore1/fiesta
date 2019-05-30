@@ -85,7 +85,7 @@ def test_TTTS_num_runs(logit_transform: bool):
 
     model_0 = model_generator(0.26, 0.03)
     model_1 = model_generator(0.28, 0.01)
-    model_2 = model_generator(0.29, 0.02)
+    model_2 = model_generator(0.29, 0.03)
     model_3 = model_generator(0.3, 0.05)
     models = [model_0, model_1, model_2, model_3]
 
