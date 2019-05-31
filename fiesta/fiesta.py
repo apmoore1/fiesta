@@ -151,7 +151,7 @@ def sequential_halving(data: List[Dict[str, Any]],
                        split_function: Callable[[List[Dict[str, Any]]], 
                                                 Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]],
                        budget: int, logit_transform: bool = False 
-                       ) -> int:
+                       ) -> Tuple[int, List[float], List[List[float]]]:
     '''
     Sequential Halving finds the best model out of the set of models given a 
     set budget of T evaluations.
