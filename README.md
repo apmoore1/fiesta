@@ -10,6 +10,10 @@ To run the notebooks as well requires installing the following dependencies thro
 
 `pip install -r requirements.txt`
 
+## Experiments in the paper
+### Target Dependent Sentiment Analysis experiments
+The 500 Macro F1 results from the 12 different TDSA models can be found within [`test_f1.json` file](./results/TDSA/test_f1.json). For replication purposes we have created a Google Colab notebook which can be found here that shows how the results from the paper can be replicated. Further more this notebook is a good example of how to use the `fiesta` library when you already have results and do not need to evaluate any modles.
+
 
 ## Contributing
 We welcome any contributions. If you would like to contribute via a feature request, ask a question, or report a bug please submit an issue and we will work with you to incorportate this into the fiesta package. We would appreciate that all pull request originate/start from an issue.
