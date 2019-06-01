@@ -5,9 +5,16 @@ Functions:
 
 1. TTTS -- Top-Two Thompson Sampling an efficient model evaluation function that 
    stops when the best model from a set of models has been found with a 
-   confidence score > (1 - p_value). 
+   confidence score > (1 - p_value).
 2. sequential_halving -- Sequential Halving finds the best model out of the set 
-   of models given a set budget of T evaluations.
+   of models given a set budget of T evaluations, this is conducted by 
+   evaluating all candiate models (N) each round and then removing the worse 
+   :math:`\floor{log_2N}` models until we are left with one (the best model).
+3. non_adaptive_fb -- Given a budget of T and N candiate models it evaluates each 
+   model :math:`\floor{N/T}` times and returns the best performing model. 
+   Similar to `sequential_halving` but does not remove any models hence non 
+   adaptive.
+4. non_adaptive_fc -- Given a 
 '''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
@@ -227,3 +234,107 @@ def sequential_halving(data: List[Dict[str, Any]],
     total_num_evals = sum([len(model_evaluations) for model_evaluations in evaluations])
     props = [len(model_evaluations) / total_num_evals for model_evaluations in evaluations]
     return candidate_names[0], props, evaluations 
+
+def non_adaptive_fb(data: List[Dict[str, Any]], 
+                    model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
+                                                          List[Dict[str, Any]]], float]],
+                    split_function: Callable[[List[Dict[str, Any]]], 
+                                             Tuple[List[Dict[str, Any]], 
+                                                   List[Dict[str, Any]]]],
+                    budget: int, logit_transform: bool = False 
+                    ) -> Tuple[int, List[List[float]]]:
+    '''
+    Given a budget of T and N candiate models it evaluates each 
+    model :math:`\floor{N/T}` times and returns the best performing model. 
+    Similar to `sequential_halving` but does not remove any models hence non 
+    adaptive.
+
+    :param data: A list of dictionaries, that as a whole represents the entire 
+                 dataset. Each dictionary should within the list represents 
+                 one sample from the dataset.
+    :param model_functions: A list of functions that represent different 
+                            models e.g. pytorch model. Which take a train and  
+                            test dataset as input and returns a metric score 
+                            e.g. Accuracy. The model functions should not have 
+                            random seeds set else it defeats the point of 
+                            finding the best model independent of the random 
+                            seed and data split.
+    :param split_function: A function that can be used to split the data into 
+                           train and test splits. This should produce random 
+                           splits each time it is called. If you would like 
+                           to not use a random split and this not find the 
+                           best the model independent of the random seed and 
+                           data split, you can hard code this function to 
+                           produce a set split each time.
+    :param budget: The total number of evaluations 
+    :param logit_transform: Whether to transform the model function's returned 
+                            metric score by the logit function.
+    :returns: Tuple containing 2 values: 1. The best performing model function 
+              index given the budget, 2. The scores that each model generated 
+              when evaluated. NOTE: That if the logit transform is True then 
+              the second item in the tuple would be scores that have been 
+              transformed by the logit function.
+    :raises ValueError: If the budget is smaller than the number of models 
+                        to evaluate.
+    '''
+    num_models = len(model_functions)
+    if budget < num_models:
+        raise ValueError(f'The budget {budget} cannot be smaller than the '
+                         f'number of models to evaluate {num_models}')
+
+    evals: List[List[float]] = []
+    num_evals_per_model = math.floor(budget / num_models)
+    for model_function in model_functions:
+        model_evals: List[float] = []
+        for _ in range(0, num_evals_per_model):
+            train, test = split_function(data)
+            score = model_function(train, test)
+            if logit_transform:
+                score = logit(score)
+            model_evals.append(score)
+        evals.append(model_evals)
+    # return model index with largest sample mean, and all the models scores.
+    eval_means = np.mean(evals, axis=1)
+    num_means = len(eval_means)
+    assert_msg = f'The number of means: {num_means} should equal the number of'\
+                 f' models {num_models}'
+    assert len(eval_means) == num_models, assert_msg
+    return np.argmax(eval_means), evals
+
+def non_adaptive_fc(N,delta):
+    #require # models and desired confidence
+    evaluations= [[] for i in range(N)]
+    est_means=np.zeros(N)
+    est_variances=np.zeros(N)
+    #count# evals for each model
+    eval_counts=np.zeros(N)
+    #start by evaluating each model 3 times
+    for i in range(0,N):
+        for j in range(0,3):
+            evaluations[i].append(eval_model(i))
+        est_means[i]=np.mean(evaluations[i])
+        est_variances[i]=np.var(evaluations[i],ddof=0)
+        eval_counts[i]=len(evaluations[i])
+    #initialize belief about location of best arm 
+    pi=belief_calc(est_means,est_variances,eval_counts,100000*N)
+    #run TTTS until hit required confidence
+    #count number of evals
+    num=3*N
+    #store running counts of each arm pulled
+    props=[]
+    pis=[]
+    while max(pi)<1-delta:
+        #sample all arms
+        for m_1 in range(0,N):
+            evaluations[m_1].append(eval_model(m_1))
+            #update summary stats
+            est_means[m_1]=np.mean(evaluations[m_1])
+            est_variances[m_1]=np.var(evaluations[m_1],ddof=0)
+            eval_counts[m_1]+=1 
+        num+=N
+        print(num)
+        #update belief
+        pi=belief_calc(est_means,est_variances,eval_counts,100000*N)
+        print(pi)
+    print("selected model "+str(np.argmax(pi)))
+    return pi, props,pis,num
