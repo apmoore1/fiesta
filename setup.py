@@ -18,7 +18,8 @@ setup(name='fiesta_nlp',
       author_email='andrew.p.moore94@gmail.com',
       license='Apache License 2.0',
       install_requires=[
-          'numpy'
+          'numpy',
+          'scipy'
       ],
       python_requires='>=3.6.1',
       packages=find_packages(),
