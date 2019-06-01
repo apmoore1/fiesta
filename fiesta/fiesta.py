@@ -2,10 +2,10 @@
 Module that contains the main fiesta functions.
 
 Functions:
-
-1. TTTS -- Top-Two Thompson Sampling an efficient model evaluation function that 
-   stops when the best model from a set of models has been found with a 
-   confidence score > (1 - p_value).
+1. TTTS -- Top-Two Thompson Sampling chooses which model to evaluate next 
+   based on the belief that the model is the best model. These 
+   evaluations continue until the best model from the set of models has been 
+   found with a confidence socre > (1 - p value).
 2. sequential_halving -- Sequential Halving finds the best model out of the set 
    of models given a set budget of T evaluations, this is conducted by 
    evaluating all candiate models (N) each round and then removing the worse 
@@ -14,7 +14,12 @@ Functions:
    model :math:`\floor{N/T}` times and returns the best performing model. 
    Similar to `sequential_halving` but does not remove any models hence non 
    adaptive.
-4. non_adaptive_fc -- Given a 
+4. non_adaptive_fc -- Evaluates every model each round until at the end of one 
+   round the best model from the set of models has been found with a 
+   confidence score > (1 - p value). This is similar to `TTTS` but does not 
+   select which models to evaluate based on there performance so far, rather 
+   it selects model equally without discrimation hence non adaptive and is 
+   the standard model evaluation approach in NLP.
 '''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
@@ -35,9 +40,19 @@ def TTTS(data: List[Dict[str, Any]],
          p_value: float, logit_transform: bool = False, samples: int = 100000
          ) -> Tuple[List[float], List[float], int, List[List[float]]]:
     '''
-    Top-Two Thompson Sampling an efficient model evaluation function that 
-    stops when the best model from a set of models has been found with a 
-    confidence score > (1 - p_value). 
+    Top-Two Thompson Sampling chooses which model to evaluate next 
+    based on the belief that the model is the best model. These 
+    evaluations continue until the best model from a set of models has been 
+    found with a confidence socre > (1 - p value).
+
+    Top-Two Thompson Sampling makes the assumption that the evaluation scores 
+    from the models follow a Gaussian distribution. For a concise list of 
+    evaluation metrics that are likely to follow a Gaussian distribution see 
+    Dror and Reichart appendix paper:
+    https://arxiv.org/pdf/1809.01448.pdf
+    Also for a more in-depth explanation of these see there related paper 
+    (Dror et al.):
+    https://www.aclweb.org/anthology/P18-1128
 
     :param data: A list of dictionaries, that as a whole represents the entire 
                  dataset. Each dictionary should within the list represents 
@@ -160,8 +175,13 @@ def sequential_halving(data: List[Dict[str, Any]],
                        budget: int, logit_transform: bool = False 
                        ) -> Tuple[int, List[float], List[List[float]]]:
     '''
-    Sequential Halving finds the best model out of the set of models given a 
-    set budget of T evaluations.
+    Sequential Halving finds the best model out of the set 
+    of models given a set budget of T evaluations, this is conducted by 
+    evaluating all candiate models (N) each round and then removing the worse 
+    :math:`\floor{log_2N}` models until we are left with one (the best model).
+
+    Assumes that the metric score from the models is bounded e.g. :math:`[0,1]`
+    for accuracy, recall, precision, and F-score. 
 
     :param data: A list of dictionaries, that as a whole represents the entire 
                  dataset. Each dictionary should within the list represents 
@@ -301,40 +321,105 @@ def non_adaptive_fb(data: List[Dict[str, Any]],
     assert len(eval_means) == num_models, assert_msg
     return np.argmax(eval_means), evals
 
-def non_adaptive_fc(N,delta):
-    #require # models and desired confidence
-    evaluations= [[] for i in range(N)]
-    est_means=np.zeros(N)
-    est_variances=np.zeros(N)
-    #count# evals for each model
-    eval_counts=np.zeros(N)
-    #start by evaluating each model 3 times
-    for i in range(0,N):
-        for j in range(0,3):
-            evaluations[i].append(eval_model(i))
-        est_means[i]=np.mean(evaluations[i])
-        est_variances[i]=np.var(evaluations[i],ddof=0)
-        eval_counts[i]=len(evaluations[i])
+def non_adaptive_fc(data: List[Dict[str, Any]], 
+                    model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
+                                                          List[Dict[str, Any]]], 
+                                                   float]],
+                    split_function: Callable[[List[Dict[str, Any]]], 
+                                             Tuple[List[Dict[str, Any]], 
+                                                   List[Dict[str, Any]]]],
+                    p_value: float, logit_transform: bool = False, 
+                    samples: int = 100000
+                    ) -> Tuple[List[float], List[float], int, List[List[float]]]:
+    '''
+    Evaluates every model each round until at the end of one 
+    round the best model from the set of models has been found with a 
+    confidence score > (1 - p value). This is similar to `TTTS` but does not 
+    select which models to evaluate based on there performance so far, rather 
+    it selects model equally without discrimation hence non adaptive and is 
+    the standard model evaluation approach in NLP.
+
+    :param data: A list of dictionaries, that as a whole represents the entire 
+                 dataset. Each dictionary should within the list represents 
+                 one sample from the dataset.
+    :param model_functions: A list of functions that represent different 
+                            models e.g. pytorch model. Which take a train and  
+                            test dataset as input and returns a metric score 
+                            e.g. Accuracy. The model functions should not have 
+                            random seeds set else it defeats the point of 
+                            finding the best model independent of the random 
+                            seed and data split.
+    :param split_function: A function that can be used to split the data into 
+                           train and test splits. This should produce random 
+                           splits each time it is called. If you would like 
+                           to not use a random split and this not find the 
+                           best the model independent of the random seed and 
+                           data split, you can hard code this function to 
+                           produce a set split each time.
+    :param p_value: The significance value for the best model to be truely the 
+                    best model e.g. 0.05 if you want to be at least 95% confident.
+    :param logit_transform: Whether to transform the model function's returned 
+                            metric score by the logit function.
+    :param samples: Number of samples to generate from our belief distribution 
+                    for each model. This argument is passed directly to 
+                    `fiesta.util.belief_calc` within this function. 
+                    This should be large e.g. minimum 10000. 
+    :returns: Tuple containing 4 values: 1. The confidence socres for each 
+              model, the best model should have the highest confidence, 2.
+              The number of times each model was evaluated as a proportion of 
+              the number of evaluations, 3. The total number of model 
+              evaluations, 4. The scores that each model generated when 
+              evaluated. NOTE: That if the logit transform is True then the 
+              last item in the tuple would be scores that have been transformed 
+              by the logit function.
+    :raises ValueError: If the p value is not between 0 and 1.
+    '''
+    if p_value < 0.0 or p_value > 1.0:
+        raise ValueError('The p value has to be between 0 and 1 and '
+                         f'not: {p_value}')
+
+    num_models = len(model_functions)
+    total_samples = samples * num_models
+
+    evaluations = [[] for i in range(num_models)]
+    est_means = np.zeros(num_models)
+    est_variances = np.zeros(num_models)
+    eval_counts = np.zeros(num_models)
+
+    # start by evaluating each model 3 times
+    for model_index, model_function in enumerate(model_functions):
+        for _ in range(0, 3):
+            train, test = split_function(data)
+            score = model_function(train, test)
+            if logit_transform:
+                score = logit(score)
+            evaluations[model_index].append(score)
+        est_means[model_index] = np.mean(evaluations[model_index])
+        est_variances[model_index] = np.var(evaluations[model_index], ddof=0)
+        eval_counts[model_index] = len(evaluations[model_index])
+    
     #initialize belief about location of best arm 
-    pi=belief_calc(est_means,est_variances,eval_counts,100000*N)
-    #run TTTS until hit required confidence
-    #count number of evals
-    num=3*N
-    #store running counts of each arm pulled
-    props=[]
-    pis=[]
-    while max(pi)<1-delta:
-        #sample all arms
-        for m_1 in range(0,N):
-            evaluations[m_1].append(eval_model(m_1))
-            #update summary stats
-            est_means[m_1]=np.mean(evaluations[m_1])
-            est_variances[m_1]=np.var(evaluations[m_1],ddof=0)
-            eval_counts[m_1]+=1 
-        num+=N
-        print(num)
-        #update belief
-        pi=belief_calc(est_means,est_variances,eval_counts,100000*N)
-        print(pi)
-    print("selected model "+str(np.argmax(pi)))
-    return pi, props,pis,num
+    pi = belief_calc(est_means, est_variances, eval_counts, total_samples)
+    
+    # count number of evals
+    num = 3 * num_models
+    # run until hit required confidence
+    while max(pi) < 1 - p_value:
+        # sample all arms
+        for model_index, model_function in enumerate(model_functions):
+            train, test = split_function(data)
+            score = model_function(train, test)
+            if logit_transform:
+                score = logit(score)
+            evaluations[model_index].append(score)
+            # update summary stats
+            est_means[model_index] = np.mean(evaluations[model_index])
+            est_variances[model_index] = np.var(evaluations[model_index], ddof=0)
+            eval_counts[model_index] += 1 
+        num += num_models
+        # update belief
+        pi = belief_calc(est_means, est_variances, eval_counts, total_samples)
+        logger.info("Evalaution: %s, Model confidences: %s", str(num), str(pi))
+    logger.info("selected model %s", str(np.argmax(pi)))
+    props = [x / sum(eval_counts) for x in eval_counts]
+    return pi, props, num, evaluations
