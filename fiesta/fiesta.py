@@ -33,8 +33,8 @@ from fiesta.util import belief_calc
 logger = logging.getLogger(__name__)
 
 def TTTS(data: List[Dict[str, Any]], 
-         model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
-                                               List[Dict[str, Any]]], float]],
+         model_functions: List[Callable[[List[Dict[str, Any]],
+                                         List[Dict[str, Any]]], float]],
          split_function: Callable[[List[Dict[str, Any]]], 
                                   Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]],
          p_value: float, logit_transform: bool = False, samples: int = 100000
@@ -168,8 +168,8 @@ def TTTS(data: List[Dict[str, Any]],
     return pi, props, num, evaluations
 
 def sequential_halving(data: List[Dict[str, Any]], 
-                       model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
-                                                             List[Dict[str, Any]]], float]],
+                       model_functions: List[Callable[[List[Dict[str, Any]],
+                                                       List[Dict[str, Any]]], float]],
                        split_function: Callable[[List[Dict[str, Any]]], 
                                                 Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]],
                        budget: int, logit_transform: bool = False 
@@ -237,8 +237,6 @@ def sequential_halving(data: List[Dict[str, Any]],
                     score = logit(score)
                 evaluations[candidate_name].append(score)
             # update means
-            print(candidate_name)
-            print(candidate_names)
             candidate_index = candidate_names.index(candidate_name)
             candidate_est_mean = np.mean(evaluations[candidate_name])
             candidate_est_means[candidate_index] = candidate_est_mean
@@ -256,8 +254,8 @@ def sequential_halving(data: List[Dict[str, Any]],
     return candidate_names[0], props, evaluations 
 
 def non_adaptive_fb(data: List[Dict[str, Any]], 
-                    model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
-                                                          List[Dict[str, Any]]], float]],
+                    model_functions: List[Callable[[List[Dict[str, Any]],
+                                                    List[Dict[str, Any]]], float]],
                     split_function: Callable[[List[Dict[str, Any]]], 
                                              Tuple[List[Dict[str, Any]], 
                                                    List[Dict[str, Any]]]],
@@ -322,9 +320,8 @@ def non_adaptive_fb(data: List[Dict[str, Any]],
     return np.argmax(eval_means), evals
 
 def non_adaptive_fc(data: List[Dict[str, Any]], 
-                    model_functions: List[Callable[[Tuple[List[Dict[str, Any]]],
-                                                          List[Dict[str, Any]]], 
-                                                   float]],
+                    model_functions: List[Callable[[List[Dict[str, Any]],
+                                                    List[Dict[str, Any]]], float]],
                     split_function: Callable[[List[Dict[str, Any]]], 
                                              Tuple[List[Dict[str, Any]], 
                                                    List[Dict[str, Any]]]],
