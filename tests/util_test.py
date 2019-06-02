@@ -4,7 +4,9 @@ from typing import List
 import pytest
 import numpy as np
 
-from fiesta.util import pull_arm, belief_calc, lists_same_size
+from fiesta_test import model_generator, split_data
+from fiesta.util import pull_arm, belief_calc, lists_same_size, fc_func_stats
+from fiesta.util import fb_func_stats
 
 @pytest.mark.parametrize("mean", (2, 3, 10, 0.7))
 @pytest.mark.parametrize("sd", (0.2, 0.31, 1.4))
@@ -118,3 +120,63 @@ def test_lists_same_size():
     lists_same_size([])
     # Empty lists
     lists_same_size([], [])
+
+@pytest.mark.parametrize("fc_func_name", ('TTTS', 'non_adaptive_fc', 'fc'))
+def test_fc_func_stats(fc_func_name: str):
+    N = 10
+    correct_model_index = 2
+    if fc_func_name == 'fc':
+        with pytest.raises(ValueError):
+            fc_func_stats(N=N, correct_model_index=correct_model_index,
+                          fc_func_name=fc_func_name)
+    else:
+        train_test_data = list(np.random.normal(0.5, 0.01, 500))
+        train_test_json = [{'x': sample} for sample in train_test_data]
+        # model 2 > model 1 > model 0
+        model_0 = model_generator(0.17, 0.02)
+        model_1 = model_generator(0.27, 0.028)
+        model_2 = model_generator(0.3, 0.015)
+        models = [model_0, model_1, model_2]
+        p_value = 0.2
+        summary_stats = fc_func_stats(N=N, 
+                                      correct_model_index=correct_model_index,
+                                      fc_func_name=fc_func_name, 
+                                      data=train_test_json, 
+                                      model_functions=models, 
+                                      split_function=split_data, p_value=p_value)
+        _min, _mean, _max, perecent_correct = summary_stats
+        if _min == _mean:
+            assert _min <= _max
+            assert _min <= _mean
+            assert _max >= _mean
+        else:
+            assert _min < _max
+            assert _min < _mean
+            assert _max > _mean
+        assert perecent_correct > 0.8
+
+@pytest.mark.parametrize("fb_func_name", ('sequential_halving', 
+                                          'non_adaptive_fb', 'fb'))
+def test_fb_func_stats(fb_func_name: str):
+    N = 100
+    correct_model_index = 2
+    if fb_func_name == 'fb':
+        with pytest.raises(ValueError):
+            fb_func_stats(N=N, correct_model_index=correct_model_index,
+                          fb_func_name=fb_func_name)
+    else:
+        train_test_data = list(np.random.normal(0.5, 0.01, 500))
+        train_test_json = [{'x': sample} for sample in train_test_data]
+        # model 2 > model 1 > model 0
+        model_0 = model_generator(0.17, 0.02)
+        model_1 = model_generator(0.27, 0.028)
+        model_2 = model_generator(0.3, 0.015)
+        models = [model_0, model_1, model_2]
+        budget = 40
+        prob_correct = fb_func_stats(N=N, 
+                                     correct_model_index=correct_model_index,
+                                     fb_func_name=fb_func_name, 
+                                     data=train_test_json, 
+                                     model_functions=models, 
+                                     split_function=split_data, budget=budget)
+        assert prob_correct >= 0.0 and prob_correct <= 1.0

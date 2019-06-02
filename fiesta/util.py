@@ -4,19 +4,17 @@ module.
 
 Functions:
 
-1. pull_arm -- return a value that has been sampled from a normal distribution 
-   that has a mean and standard deviation of those given as arguments.
-2. belief_calc -- The number of times a model performed best for each sample 
-   based on each model belief distribution, normliased by the number of samples 
-   (this is in affect the confidence for each model of whether that model is 
-   the best model p-value can be calculated by 1 - the confidence value). 
-   shape (Number of models,)
-3. lists_same_size -- Checks if the lists given as arguments are of the same 
-   size, if not it raises a ValueError.
+1. pull_arm
+2. belief_calc
+3. lists_same_size
+4. fc_func_stats
+5. fb_func_stats
 '''
-from typing import List
+from typing import List, Callable, Any, Dict, Tuple
 
 import numpy as np
+
+import fiesta
 
 def pull_arm(mean: float, sd: float) -> float:
     '''
@@ -93,3 +91,84 @@ def lists_same_size(*lists) -> None:
         else:
             if list_length != current_list_length:
                 raise ValueError(f'The lists are not of the same size: {lists}')
+
+def fc_func_stats(N: int, correct_model_index: int, 
+                  fc_func_name: str, **fc_kwargs) -> Tuple[int, int, int, float]:
+    '''
+    Given a Fixed Confidence (FC) function like TTTS it will run that 
+    function with the given keyword argument *N* times and will report the 
+    summary statistics: min, mean, max and percentage of times the 
+    FC function correctly found the best model.
+
+    :param N: Number of times to run the Fixed Confidence (FC) function
+    :param correct_model_index: The index of the best model
+    :param model_funcs: Functions that will generated model evaluation scores
+    :param fc_func_name: The name of the FC function being evaluated e.g. 
+                        `non_adaptive_fc` or `TTTS`
+    :param fc_kwargs: Keyword arguments to give to the FC function.
+    :returns: Tuple containing min, mean, max, and percentage correct. Where the 
+              first 3 relate to the number of evaluations the FC function 
+              required to get to the confidence level required. The last is the 
+              percentage of those evaluation where the best model was the model 
+              that got to that required confidence level.
+    :raises ValueError: If the fc_func_name is not in the list of acceptable 
+                        FC function names.
+    '''
+    # Get FC function
+    fc_func_names = ['TTTS', 'non_adaptive_fc']
+    if fc_func_name not in fc_func_names:
+        raise ValueError(f'The FC function name given {fc_func_name} is not '
+                        f'the list of acceptable function names {fc_func_names}')
+    fc_func = getattr(fiesta, fc_func_name)
+    
+    # Run the FC function N times and count the number of times 
+    # the best model was correctly chosen
+    number_correct = 0
+    total_num_evals = []
+    for _ in range(0, N):
+        conf_scores, _, num_evals, _ = fc_func(**fc_kwargs)
+    total_num_evals.append(num_evals)
+    if np.argmax(conf_scores) == correct_model_index:
+        number_correct += 1
+    # Summary stats
+    _min = np.min(total_num_evals)
+    _mean = np.mean(total_num_evals)
+    _max = np.max(total_num_evals)
+    perecent_correct = (number_correct / N) * 100
+    return _min, _mean, _max, perecent_correct
+
+def fb_func_stats(N: int, correct_model_index: int, 
+                  fb_func_name: str, **fb_kwargs) -> float:
+    '''
+    Given a Fixed Budget (FB) function like sequential_halving it will run that 
+    function with the given keyword argument *N* times and will report the 
+    the probability that the FB function chose the best model from all *N* 
+    runs.
+
+    :param N: Number of times to run the Fixed Budget (FB) function.
+    :param correct_model_index: The index of the best model.
+    :param fb_func_name: The name of the FB function being evaluated e.g. 
+                         `sequential_halving` or `non_adaptive_fb`
+    :param fb_kwargs: Keyword arguments to give to the FB function.
+    :returns: The probability the best model was correctly identified by the 
+              FB function across the N runs.
+    :raises ValueError: If the fb_func_name is not in the list of acceptable 
+                        FB function names.
+    '''
+    # Get FB function
+    fb_func_names = ['sequential_halving', 'non_adaptive_fb']
+    if fb_func_name not in fb_func_names:
+        raise ValueError(f'The FB function name given {fb_func_name} is not '
+                        f'the list of acceptable function names {fb_func_names}')
+    fb_func = getattr(fiesta, fb_func_name)
+
+    # Run the FB function N times and count the number of times 
+    # the best model was correctly chosen
+    number_correct = 0
+    for _ in range(0, N):
+        fb_return = fb_func(**fb_kwargs)
+        pred_best_model_index = fb_return[0]
+        if pred_best_model_index == correct_model_index:
+            number_correct += 1
+    probability_correct = number_correct / N
+    return probability_correct
