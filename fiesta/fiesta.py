@@ -2,24 +2,11 @@
 Module that contains the main fiesta functions.
 
 Functions:
-1. TTTS -- Top-Two Thompson Sampling chooses which model to evaluate next 
-   based on the belief that the model is the best model. These 
-   evaluations continue until the best model from the set of models has been 
-   found with a confidence socre > (1 - p value).
-2. sequential_halving -- Sequential Halving finds the best model out of the set 
-   of models given a set budget of T evaluations, this is conducted by 
-   evaluating all candiate models (N) each round and then removing the worse 
-   :math:`\floor{log_2N}` models until we are left with one (the best model).
-3. non_adaptive_fb -- Given a budget of T and N candiate models it evaluates each 
-   model :math:`\floor{N/T}` times and returns the best performing model. 
-   Similar to `sequential_halving` but does not remove any models hence non 
-   adaptive.
-4. non_adaptive_fc -- Evaluates every model each round until at the end of one 
-   round the best model from the set of models has been found with a 
-   confidence score > (1 - p value). This is similar to `TTTS` but does not 
-   select which models to evaluate based on there performance so far, rather 
-   it selects model equally without discrimation hence non adaptive and is 
-   the standard model evaluation approach in NLP.
+
+1. TTTS
+2. sequential_halving
+3. non_adaptive_fb
+4. non_adaptive_fc
 '''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
