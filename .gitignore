@@ -2,3 +2,8 @@ __pycache__
 .vscode
 .pytest_cache
 .ipynb_checkpoints
+.coverage
+docs/build/
+docs/make.bat
+docs/source/fiesta.rst
+docs/source/modules.rst
