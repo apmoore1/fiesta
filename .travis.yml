@@ -15,3 +15,8 @@ script:
   - sphinx-apidoc -o source/ ../fiesta
   - make html
   - cd -
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs/build/html
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
