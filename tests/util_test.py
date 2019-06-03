@@ -134,7 +134,7 @@ def test_fc_func_stats(fc_func_name: str):
         train_test_json = [{'x': sample} for sample in train_test_data]
         # model 2 > model 1 > model 0
         model_0 = model_generator(0.17, 0.02)
-        model_1 = model_generator(0.25, 0.028)
+        model_1 = model_generator(0.27, 0.018)
         model_2 = model_generator(0.3, 0.015)
         models = [model_0, model_1, model_2]
         p_value = 0.2
@@ -145,14 +145,10 @@ def test_fc_func_stats(fc_func_name: str):
                                       model_functions=models, 
                                       split_function=split_data, p_value=p_value)
         _min, _mean, _max, perecent_correct = summary_stats
-        if _min == _mean:
-            assert _min <= _max
-            assert _min <= _mean
-            assert _max >= _mean
-        else:
-            assert _min < _max
-            assert _min < _mean
-            assert _max > _mean
+        
+        assert _min < _max
+        assert _min < _mean
+        assert _max > _mean
         assert perecent_correct > 0.8
 
 @pytest.mark.parametrize("fb_func_name", ('sequential_halving', 

@@ -127,7 +127,7 @@ def fc_func_stats(N: int, correct_model_index: int,
     total_num_evals = []
     for _ in range(0, N):
         conf_scores, _, num_evals, _ = fc_func(**fc_kwargs)
-    total_num_evals.append(num_evals)
+        total_num_evals.append(num_evals)
     if np.argmax(conf_scores) == correct_model_index:
         number_correct += 1
     # Summary stats
