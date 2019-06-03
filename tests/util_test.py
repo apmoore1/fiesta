@@ -134,7 +134,7 @@ def test_fc_func_stats(fc_func_name: str):
         train_test_json = [{'x': sample} for sample in train_test_data]
         # model 2 > model 1 > model 0
         model_0 = model_generator(0.17, 0.02)
-        model_1 = model_generator(0.27, 0.028)
+        model_1 = model_generator(0.25, 0.028)
         model_2 = model_generator(0.3, 0.015)
         models = [model_0, model_1, model_2]
         p_value = 0.2
