@@ -10,11 +10,15 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - python -m pytest
+  - python -m pytest --cov=./fiesta
   - cd docs
   - sphinx-apidoc -o source/ ../fiesta
   - make html
   - cd -
+
+after_success:
+  - codecov
+
 deploy:
   provider: pages
   skip_cleanup: true
