@@ -1,5 +1,5 @@
 # FIESTA (Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms)
-[![licence](https://img.shields.io/hexpm/l/plug.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://travis-ci.org/apmoore1/fiesta.svg?branch=master)](https://travis-ci.org/apmoore1/fiesta)
+[![licence](https://img.shields.io/hexpm/l/plug.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://travis-ci.org/apmoore1/fiesta.svg?branch=master)](https://travis-ci.org/apmoore1/fiesta) [![codecov](https://codecov.io/gh/apmoore1/fiesta/branch/master/graph/badge.svg)](https://codecov.io/gh/apmoore1/fiesta)
 
 ## Installing
 Currently only been tested with python version 3.6.1 and above.
