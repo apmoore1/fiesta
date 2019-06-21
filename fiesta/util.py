@@ -128,8 +128,8 @@ def fc_func_stats(N: int, correct_model_index: int,
     for _ in range(0, N):
         conf_scores, _, num_evals, _ = fc_func(**fc_kwargs)
         total_num_evals.append(num_evals)
-    if np.argmax(conf_scores) == correct_model_index:
-        number_correct += 1
+        if np.argmax(conf_scores) == correct_model_index:
+            number_correct += 1
     # Summary stats
     _min = np.min(total_num_evals)
     _mean = np.mean(total_num_evals)

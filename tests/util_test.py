@@ -134,8 +134,8 @@ def test_fc_func_stats(fc_func_name: str):
         train_test_json = [{'x': sample} for sample in train_test_data]
         # model 2 > model 1 > model 0
         model_0 = model_generator(0.17, 0.02)
-        model_1 = model_generator(0.27, 0.018)
-        model_2 = model_generator(0.3, 0.015)
+        model_1 = model_generator(0.28, 0.015)
+        model_2 = model_generator(0.3, 0.02)
         models = [model_0, model_1, model_2]
         p_value = 0.2
         summary_stats = fc_func_stats(N=N, 
@@ -149,7 +149,29 @@ def test_fc_func_stats(fc_func_name: str):
         assert _min < _max
         assert _min < _mean
         assert _max > _mean
-        assert perecent_correct > 0.8
+        assert perecent_correct > 80.0
+        # This is to ensure that we never always get 100.0%
+        model_0 = model_generator(0.17, 0.02)
+        model_1 = model_generator(0.295, 0.015)
+        model_2 = model_generator(0.3, 0.02)
+        models = [model_0, model_1, model_2]
+        p_value = 0.9
+        summary_stats = fc_func_stats(N=N, 
+                                      correct_model_index=correct_model_index,
+                                      fc_func_name=fc_func_name, 
+                                      data=train_test_json, 
+                                      model_functions=models, 
+                                      split_function=split_data, p_value=p_value)
+        _min, _mean, _max, perecent_correct = summary_stats
+        if _min == _max:
+            assert _min == _mean
+            assert _min == 9
+        else:
+            assert _min < _max
+            assert _min < _mean
+            assert _max > _mean
+        assert perecent_correct < 80.0
+        assert perecent_correct > 10.0
 
 @pytest.mark.parametrize("fb_func_name", ('sequential_halving', 
                                           'non_adaptive_fb', 'fb'))
