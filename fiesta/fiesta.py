@@ -236,9 +236,6 @@ def sequential_halving(data: List[Dict[str, Any]],
             del candidate_names[drop_index]
             del candidate_est_means[drop_index]
         _round = _round + 1
-    if len(candidate_names) != 1:
-        raise ValueError(f'The number of candiates left should be one. '
-                         f'Candidate names left: {candidate_names}')
     total_num_evals = sum([len(model_evaluations) for model_evaluations in evaluations])
     props = [len(model_evaluations) / total_num_evals for model_evaluations in evaluations]
     return candidate_names[0], props, evaluations 
