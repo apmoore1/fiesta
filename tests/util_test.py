@@ -3,6 +3,7 @@ from typing import List
 
 import pytest
 import numpy as np
+from flaky import flaky
 
 from fiesta_test import model_generator, split_data
 from fiesta.util import pull_arm, belief_calc, lists_same_size, fc_func_stats
@@ -121,6 +122,7 @@ def test_lists_same_size():
     # Empty lists
     lists_same_size([], [])
 
+@flaky
 @pytest.mark.parametrize("fc_func_name", ('TTTS', 'non_adaptive_fc', 'fc'))
 def test_fc_func_stats(fc_func_name: str):
     N = 10
@@ -152,7 +154,7 @@ def test_fc_func_stats(fc_func_name: str):
         assert perecent_correct > 80.0
         # This is to ensure that we never always get 100.0%
         model_0 = model_generator(0.17, 0.02)
-        model_1 = model_generator(0.295, 0.015)
+        model_1 = model_generator(0.295, 0.017)
         model_2 = model_generator(0.3, 0.02)
         models = [model_0, model_1, model_2]
         p_value = 0.9
