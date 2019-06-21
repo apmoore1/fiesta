@@ -7,6 +7,13 @@ Currently only been tested with python version 3.6.1 and above.
 `pip install fiesta-nlp`
 
 ## Experiments in the paper
+### NER experiments
+The code used to create the NER results can be founder [here](https://github.com/apmoore1/NER) with all of the instructions on:
+1. How the data was split.
+2. How to re-run the models.
+3. How the images in the paper were created.
+4. Links to all of the original F1 results and data splits.
+
 ### Target Dependent Sentiment Analysis experiments
 The 500 Macro F1 results from the 12 different TDSA models can be found within [`test_f1.json` file](./results/TDSA/test_f1.json). For replication purposes we have created a Google Colab notebook which can be found here that shows how the results from the paper can be replicated. Further more this notebook is a good example of how to use the `fiesta` library when you already have results and do not need to evaluate any modles.
 
