@@ -1,4 +1,5 @@
 from typing import List, Dict, Any, Tuple, Callable
+import math
 import statistics
 
 import numpy as np
@@ -82,6 +83,34 @@ def test_fixed_budget_methods(logit_transform: bool, function_name: str):
                 score = expit(score)
             assert score >= 0
             assert score <= 1
+
+    if function_name == 'non_adaptive_fb':
+        # Ensure that it will run with the budget equal to the number of models
+        budget = len(models)
+        fb_function(train_test_json, models, split_data, budget,
+                                logit_transform=logit_transform)
+        # Ensure that it will raise a ValueError if the number of models is 
+        # greater than the budget
+        with pytest.raises(ValueError):
+            budget = len(models) - 1
+            fb_function(train_test_json, models, split_data, budget,
+                        logit_transform=logit_transform)
+    elif function_name == 'sequential_halving':
+        # Ensure that it will run with the budget equal to the number of models
+        # * the log to the base 2 of the number of models.
+        num_models = len(models)
+        R = math.ceil(np.log2(num_models))
+        min_num_models = num_models * R
+        budget = min_num_models
+        fb_function(train_test_json, models, split_data, budget,
+                    logit_transform=logit_transform)
+        # Ensure that it will raise a ValueError if the number of models 
+        # * the log to the base 2 of the number of models is greater than the 
+        # budget
+        with pytest.raises(ValueError):
+            budget = min_num_models - 1
+            fb_function(train_test_json, models, split_data, budget,
+                        logit_transform=logit_transform)
 
 # Fixed constriant tests
 

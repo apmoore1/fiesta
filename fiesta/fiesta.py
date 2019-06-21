@@ -198,14 +198,17 @@ def sequential_halving(data: List[Dict[str, Any]],
               the tuple would be scores that have been transformed by the logit 
               function.
     :raises ValueError: If the budget is smaller than the number of models 
-                        to evaluate.
+                        * the log to the base 2 of the number of models.
     '''
     num_models = len(model_functions)
-    if budget < num_models:
-        raise ValueError(f'The budget {budget} cannot be smaller than the '
-                         f'number of models to evaluate {num_models}')
-    evaluations = [[] for x in range(0, num_models)]
     R = math.ceil(np.log2(num_models))
+    min_num_models = num_models * R
+    if budget < min_num_models:
+        raise ValueError(f'The budget {budget} cannot be smaller than (the '
+                         f'number of models to evaluate  {num_models}) * '
+                         '(the log to the base 2 of the number of models '
+                         f'{R}) = {min_num_models}')
+    evaluations = [[] for x in range(0, num_models)]
     candidate_names = [x for x in range(0, num_models)]
     candidate_est_means = [0 for x in range(0, num_models)]
     _round = 0
