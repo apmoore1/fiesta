@@ -3,8 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to FIESTA's documentation!
-==================================
+FIESTA Package
+==============
+FIESTA (Fast IdEntification of State-of-The-Art) package as the name suggests allows you to easily find the **best model** from a set of models taking into **data splits** and **random seeds**.
+
+Installing
+==========
+
+.. code-block:: bash 
+
+    pip install fiesta-nlp
 
 .. toctree::
    :maxdepth: 2
