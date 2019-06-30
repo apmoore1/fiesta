@@ -3,6 +3,7 @@ __pycache__
 .pytest_cache
 .ipynb_checkpoints
 .coverage
+.DS_Store
 docs/build/
 docs/make.bat
 docs/source/fiesta.rst

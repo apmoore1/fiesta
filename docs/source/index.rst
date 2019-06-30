@@ -15,8 +15,11 @@ Installing
     pip install fiesta-nlp
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 4
+    :caption: Package Reference
+
+    ./api/model_selectors
+    ./api/fiesta.util
 
 
 

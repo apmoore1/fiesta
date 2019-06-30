@@ -1,13 +1,3 @@
-'''
-Module that contains the main fiesta functions.
-
-Functions:
-
-1. TTTS
-2. sequential_halving
-3. non_adaptive_fb
-4. non_adaptive_fc
-'''
 import logging
 from typing import List, Dict, Any, Tuple, Callable
 import math
@@ -163,9 +153,9 @@ def sequential_halving(data: List[Dict[str, Any]],
                        ) -> Tuple[int, List[float], List[List[float]]]:
     '''
     Sequential Halving finds the best model out of the set 
-    of models given a set budget of T evaluations, this is conducted by 
-    evaluating all candiate models (N) each round and then removing the worse 
-    :math:`\floor{log_2N}` models until we are left with one (the best model).
+    of models :math:`N` given a budget of :math:`T` evaluations, this is conducted by 
+    evaluating all candiate models :math:`S` each round and then removing the worse 
+    :math:`\lfloor\\frac{|S|}{2}\\rfloor` models until we are left with one (the best model).
 
     Assumes that the metric score from the models is bounded e.g. :math:`[0,1]`
     for accuracy, recall, precision, and F-score. 
@@ -250,8 +240,8 @@ def non_adaptive_fb(data: List[Dict[str, Any]],
                     ) -> Tuple[int, List[List[float]]]:
     '''
     Given a budget of T and N candiate models it evaluates each 
-    model :math:`\floor{N/T}` times and returns the best performing model. 
-    Similar to `sequential_halving` but does not remove any models hence non 
+    model :math:`\lfloor\\frac{N}{T}\\rfloor` times and returns the best performing model. 
+    Similar to :func:`fiesta.fiesta.sequential_halving` but does not remove any models hence non 
     adaptive.
 
     :param data: A list of dictionaries, that as a whole represents the entire 
