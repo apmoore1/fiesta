@@ -17,22 +17,8 @@ def TTTS(data: List[Dict[str, Any]],
          p_value: float, logit_transform: bool = False, samples: int = 100000
          ) -> Tuple[List[float], List[float], int, List[List[float]]]:
     '''
-    Top-Two Thompson Sampling chooses which model to evaluate next 
-    based on the belief that the model is the best model. These 
-    evaluations continue until the best model from a set of models has been 
-    found with a confidence socre > (1 - p value).
-
-    Top-Two Thompson Sampling makes the assumption that the evaluation scores 
-    from the models follow a Gaussian distribution. For a concise list of 
-    evaluation metrics that are likely to follow a Gaussian distribution see 
-    Dror and Reichart appendix paper:
-    https://arxiv.org/pdf/1809.01448.pdf
-    Also for a more in-depth explanation of these see there related paper 
-    (Dror et al.):
-    https://www.aclweb.org/anthology/P18-1128
-
     :param data: A list of dictionaries, that as a whole represents the entire 
-                 dataset. Each dictionary should within the list represents 
+                 dataset. Each dictionary within the list represents 
                  one sample from the dataset.
     :param model_functions: A list of functions that represent different 
                             models e.g. pytorch model. Which take a train and  
@@ -43,28 +29,31 @@ def TTTS(data: List[Dict[str, Any]],
                             seed and data split.
     :param split_function: A function that can be used to split the data into 
                            train and test splits. This should produce random 
-                           splits each time it is called. If you would like 
-                           to not use a random split and this not find the 
-                           best the model independent of the random seed and 
-                           data split, you can hard code this function to 
-                           produce a set split each time.
+                           splits each time it is called. If you would like to 
+                           use a fixed split each time, you can hard code this 
+                           function to produce a fixed split each time.
     :param p_value: The significance value for the best model to be truely the 
-                    best model e.g. 0.05 if you want to be at least 95% confident.
+                    best model e.g. 0.05 if you want to be at least 
+                    95% confident.
     :param logit_transform: Whether to transform the model function's returned 
                             metric score by the logit function.
     :param samples: Number of samples to generate from our belief distribution 
                     for each model. This argument is passed directly to 
-                    `fiesta.util.belief_calc` within this function. 
+                    :func:`fiesta.util.belief_calc` within this function. 
                     This should be large e.g. minimum 10000. 
-    :returns: Tuple containing 4 values: 1. The confidence socres for each 
-              model, the best model should have the highest confidence, 2.
-              The number of times each model was evaluated as a proportion of 
-              the number of evaluations, 3. The total number of model 
-              evaluations, 4. The scores that each model generated when 
-              evaluated. NOTE: That if the logit transform is True then the 
-              last item in the tuple would be scores that have been transformed 
-              by the logit function.
-    :raises ValueError: If the p value is not between 0 and 1.
+    :returns: Tuple containing 4 values: 
+              
+              1. The confidence socres for each model, the best model should 
+                 have the highest confidence
+              2. The number of times each model was evaluated as a proportion of 
+                 the number of evaluations
+              3. The total number of model evaluations
+              4. The scores that each model generated when evaluated. 
+              
+             :NOTE: That if the logit transform is True then the last item in 
+                     the tuple would be scores that have been transformed by 
+                     the logit function.
+    :raises ValueError: If the ``p_value`` is not between 0 and 1.
     '''
     if p_value < 0.0 or p_value > 1.0:
         raise ValueError('The p value has to be between 0 and 1 and '
@@ -152,16 +141,8 @@ def sequential_halving(data: List[Dict[str, Any]],
                        budget: int, logit_transform: bool = False 
                        ) -> Tuple[int, List[float], List[List[float]]]:
     '''
-    Sequential Halving finds the best model out of the set 
-    of models :math:`N` given a budget of :math:`T` evaluations, this is conducted by 
-    evaluating all candiate models :math:`S` each round and then removing the worse 
-    :math:`\lfloor\\frac{|S|}{2}\\rfloor` models until we are left with one (the best model).
-
-    Assumes that the metric score from the models is bounded e.g. :math:`[0,1]`
-    for accuracy, recall, precision, and F-score. 
-
     :param data: A list of dictionaries, that as a whole represents the entire 
-                 dataset. Each dictionary should within the list represents 
+                 dataset. Each dictionary within the list represents 
                  one sample from the dataset.
     :param model_functions: A list of functions that represent different 
                             models e.g. pytorch model. Which take a train and  
@@ -172,23 +153,24 @@ def sequential_halving(data: List[Dict[str, Any]],
                             seed and data split.
     :param split_function: A function that can be used to split the data into 
                            train and test splits. This should produce random 
-                           splits each time it is called. If you would like 
-                           to not use a random split and this not find the 
-                           best the model independent of the random seed and 
-                           data split, you can hard code this function to 
-                           produce a set split each time.
+                           splits each time it is called. If you would like to 
+                           use a fixed split each time, you can hard code this 
+                           function to produce a fixed split each time.
     :param budget: The total number of evaluations 
     :param logit_transform: Whether to transform the model function's returned 
                             metric score by the logit function.
-    :returns: Tuple containing 3 values: 1. The best performing model function 
-              index given the budget, 2. The number of times each model was 
-              evaluated as a proportion of the total number of evaluations, 3. 
-              The scores that each model generated when evaluated. 
-              NOTE: That if the logit transform is True then the last item in 
-              the tuple would be scores that have been transformed by the logit 
-              function.
-    :raises ValueError: If the budget is smaller than the number of models 
-                        * the log to the base 2 of the number of models.
+    :returns: Tuple containing 3 values: 
+    
+              1. The best performing model function index given the budget
+              2. The number of times each model was evaluated as a proportion 
+                 of the total number of evaluations
+              3. The scores that each model generated when evaluated. 
+              
+              :NOTE: That if the logit transform is True then the last item in 
+                     the tuple would be scores that have been transformed by 
+                     the logit function.
+    :raises ValueError: Given budget :math:`T` and the models :math:`N` this 
+                        will be raised if: :math:`T < (|N| * \log_2|N|)`
     '''
     num_models = len(model_functions)
     R = math.ceil(np.log2(num_models))
@@ -239,13 +221,8 @@ def non_adaptive_fb(data: List[Dict[str, Any]],
                     budget: int, logit_transform: bool = False 
                     ) -> Tuple[int, List[List[float]]]:
     '''
-    Given a budget of T and N candiate models it evaluates each 
-    model :math:`\lfloor\\frac{N}{T}\\rfloor` times and returns the best performing model. 
-    Similar to :func:`fiesta.fiesta.sequential_halving` but does not remove any models hence non 
-    adaptive.
-
     :param data: A list of dictionaries, that as a whole represents the entire 
-                 dataset. Each dictionary should within the list represents 
+                 dataset. Each dictionary within the list represents 
                  one sample from the dataset.
     :param model_functions: A list of functions that represent different 
                             models e.g. pytorch model. Which take a train and  
@@ -256,21 +233,22 @@ def non_adaptive_fb(data: List[Dict[str, Any]],
                             seed and data split.
     :param split_function: A function that can be used to split the data into 
                            train and test splits. This should produce random 
-                           splits each time it is called. If you would like 
-                           to not use a random split and this not find the 
-                           best the model independent of the random seed and 
-                           data split, you can hard code this function to 
-                           produce a set split each time.
+                           splits each time it is called. If you would like to 
+                           use a fixed split each time, you can hard code this 
+                           function to produce a fixed split each time.
     :param budget: The total number of evaluations 
     :param logit_transform: Whether to transform the model function's returned 
                             metric score by the logit function.
-    :returns: Tuple containing 2 values: 1. The best performing model function 
-              index given the budget, 2. The scores that each model generated 
-              when evaluated. NOTE: That if the logit transform is True then 
-              the second item in the tuple would be scores that have been 
-              transformed by the logit function.
-    :raises ValueError: If the budget is smaller than the number of models 
-                        to evaluate.
+    :returns: Tuple containing 2 values: 
+              
+              1. The best performing model function index given the budget
+              2. The scores that each model generated when evaluated. 
+              
+              :NOTE: That if the logit transform is True then the last item in 
+                     the tuple would be scores that have been transformed by 
+                     the logit function.
+    :raises ValueError: Given budget :math:`T` and the models :math:`N` this 
+                        will be raised if: :math:`T < |N|`
     '''
     num_models = len(model_functions)
     if budget < num_models:
@@ -306,15 +284,8 @@ def non_adaptive_fc(data: List[Dict[str, Any]],
                     samples: int = 100000
                     ) -> Tuple[List[float], List[float], int, List[List[float]]]:
     '''
-    Evaluates every model each round until at the end of one 
-    round the best model from the set of models has been found with a 
-    confidence score > (1 - p value). This is similar to `TTTS` but does not 
-    select which models to evaluate based on there performance so far, rather 
-    it selects model equally without discrimation hence non adaptive and is 
-    the standard model evaluation approach in NLP.
-
     :param data: A list of dictionaries, that as a whole represents the entire 
-                 dataset. Each dictionary should within the list represents 
+                 dataset. Each dictionary within the list represents 
                  one sample from the dataset.
     :param model_functions: A list of functions that represent different 
                             models e.g. pytorch model. Which take a train and  
@@ -325,28 +296,31 @@ def non_adaptive_fc(data: List[Dict[str, Any]],
                             seed and data split.
     :param split_function: A function that can be used to split the data into 
                            train and test splits. This should produce random 
-                           splits each time it is called. If you would like 
-                           to not use a random split and this not find the 
-                           best the model independent of the random seed and 
-                           data split, you can hard code this function to 
-                           produce a set split each time.
+                           splits each time it is called. If you would like to 
+                           use a fixed split each time, you can hard code this 
+                           function to produce a fixed split each time.
     :param p_value: The significance value for the best model to be truely the 
-                    best model e.g. 0.05 if you want to be at least 95% confident.
+                    best model e.g. 0.05 if you want to be at 
+                    least 95% confident.
     :param logit_transform: Whether to transform the model function's returned 
                             metric score by the logit function.
     :param samples: Number of samples to generate from our belief distribution 
                     for each model. This argument is passed directly to 
-                    `fiesta.util.belief_calc` within this function. 
+                    :func:`fiesta.util.belief_calc` within this function. 
                     This should be large e.g. minimum 10000. 
-    :returns: Tuple containing 4 values: 1. The confidence socres for each 
-              model, the best model should have the highest confidence, 2.
-              The number of times each model was evaluated as a proportion of 
-              the number of evaluations, 3. The total number of model 
-              evaluations, 4. The scores that each model generated when 
-              evaluated. NOTE: That if the logit transform is True then the 
-              last item in the tuple would be scores that have been transformed 
-              by the logit function.
-    :raises ValueError: If the p value is not between 0 and 1.
+    :returns: Tuple containing 4 values: 
+              
+              1. The confidence socres for each model, the best model should 
+                 have the highest confidence
+              2. The number of times each model was evaluated as a proportion of 
+                 the number of evaluations
+              3. The total number of model evaluations
+              4. The scores that each model generated when evaluated. 
+              
+              :NOTE: That if the logit transform is True then the last item in 
+                     the tuple would be scores that have been transformed by 
+                     the logit function.
+    :raises ValueError: If the ``p_value`` is not between 0 and 1.
     '''
     if p_value < 0.0 or p_value > 1.0:
         raise ValueError('The p value has to be between 0 and 1 and '

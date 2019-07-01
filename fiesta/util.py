@@ -31,7 +31,7 @@ def belief_calc(est_means: np.ndarray, est_variances: np.ndarray,
               model of whether that model is the best model, p-value can be 
               calculated by 1 - the confidence value for each model). 
               shape (Number of models,)
-    :raises ValueError: If the eval_counts contains values less than 3. As 
+    :raises ValueError: If the ``eval_counts`` contains values less than 3. As 
                         it is required that each model has been evaluated a
                         minimum of 3 times, this is due to our prior beleif 
                         in our algorthim.  
@@ -41,7 +41,7 @@ def belief_calc(est_means: np.ndarray, est_variances: np.ndarray,
     num_models = eval_counts.shape[0]
     if sum((eval_counts - 2.0) > 0) != num_models:
         raise ValueError("The number of times each model has been evaluated "
-                         "has to be greater than 2, at least one of your "
+                         "has to be greater than 2 or at least one of your "
                          f"model's has been evaluated less:{eval_counts}")
 
     # generate samples from t dist with required degrees of freedom
@@ -83,23 +83,25 @@ def lists_same_size(*lists) -> None:
 def fc_func_stats(N: int, correct_model_index: int, 
                   fc_func_name: str, **fc_kwargs) -> Tuple[int, int, int, float]:
     '''
-    Given a Fixed Confidence (FC) function like TTTS it will run that 
-    function with the given keyword argument *N* times and will report the 
-    summary statistics: min, mean, max and percentage of times the 
-    FC function correctly found the best model.
-
     :param N: Number of times to run the Fixed Confidence (FC) function
     :param correct_model_index: The index of the best model
     :param model_funcs: Functions that will generated model evaluation scores
     :param fc_func_name: The name of the FC function being evaluated e.g. 
                         `non_adaptive_fc` or `TTTS`
     :param fc_kwargs: Keyword arguments to give to the FC function.
-    :returns: Tuple containing min, mean, max, and percentage correct. Where the 
-              first 3 relate to the number of evaluations the FC function 
-              required to get to the confidence level required. The last is the 
-              percentage of those evaluation where the best model was the model 
-              that got to that required confidence level.
-    :raises ValueError: If the fc_func_name is not in the list of acceptable 
+    :returns: Tuple containing: 
+              
+              1. min
+              2. mean
+              3. max
+              4. percentage correct 
+              
+              Where the first 3 relate to the number of evaluations the FC 
+              function required to get to the confidence level required. 
+              The last is the percentage of those runs where the most 
+              confident model was the correct model determined by the 
+              ``correct_model_index`` argument.
+    :raises ValueError: If the ``fc_func_name`` is not in the list of acceptable 
                         FC function names.
     '''
     # Get FC function
@@ -128,11 +130,6 @@ def fc_func_stats(N: int, correct_model_index: int,
 def fb_func_stats(N: int, correct_model_index: int, 
                   fb_func_name: str, **fb_kwargs) -> float:
     '''
-    Given a Fixed Budget (FB) function like sequential_halving it will run that 
-    function with the given keyword argument *N* times and will report the 
-    the probability that the FB function chose the best model from all *N* 
-    runs.
-
     :param N: Number of times to run the Fixed Budget (FB) function.
     :param correct_model_index: The index of the best model.
     :param fb_func_name: The name of the FB function being evaluated e.g. 
@@ -140,7 +137,7 @@ def fb_func_stats(N: int, correct_model_index: int,
     :param fb_kwargs: Keyword arguments to give to the FB function.
     :returns: The probability the best model was correctly identified by the 
               FB function across the N runs.
-    :raises ValueError: If the fb_func_name is not in the list of acceptable 
+    :raises ValueError: If the ``fb_func_name`` is not in the list of acceptable 
                         FB function names.
     '''
     # Get FB function
