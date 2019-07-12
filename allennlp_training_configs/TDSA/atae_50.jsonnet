@@ -15,7 +15,7 @@
             "tokens": {
                 "type": "embedding",
                 "embedding_dim": 50,
-                "pretrained_file": "http://ucrel-web.lancaster.ac.uk/moorea/glove_vectors/semeval_restaurant_specific/restaurant_glove.840B.300d.txt",
+                "pretrained_file": "http://ucrel-web.lancaster.ac.uk/moorea/glove_vectors/semeval_restaurant_specific/restaurant_glove.6B.50d.txt",
                 "trainable": true
             }
             
@@ -26,7 +26,7 @@
           "tokens": {
               "type": "embedding",
               "embedding_dim": 50,
-              "pretrained_file": "http://ucrel-web.lancaster.ac.uk/moorea/glove_vectors/semeval_restaurant_specific/restaurant_glove.840B.300d.txt",
+              "pretrained_file": "http://ucrel-web.lancaster.ac.uk/moorea/glove_vectors/semeval_restaurant_specific/restaurant_glove.6B.50d.txt",
               "trainable": true
           }
           
