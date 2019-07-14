@@ -4,9 +4,6 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open("AUTHORS.txt", "r") as fh:
-    authors = fh.read()
-
 
 setup(name='fiesta_nlp',
       version='0.0.1',
@@ -14,7 +11,7 @@ setup(name='fiesta_nlp',
       long_description=long_description,
       long_description_content_type="text/markdown",
       url='https://github.com/apmoore1/fiesta',
-      author=authors,
+      author='Andrew Moore, Henry Moss',
       author_email='andrew.p.moore94@gmail.com',
       license='Apache License 2.0',
       install_requires=[

@@ -3,7 +3,8 @@
 
 ## Quick links:
 1. [Documentation](https://apmoore1.github.io/fiesta/) - You can find the motivation of the project code base there as well.
-2. [Tutorials]()
+2. [Tutorials](https://apmoore1.github.io/fiesta/#tutorials)
+3. [Citing](#citing)
 
 ## Installing
 Requires Python 3.6.1 or greater.
@@ -21,7 +22,9 @@ The code used to create the NER results can be founder [here](https://github.com
 ### Target Dependent Sentiment Analysis experiments
 The 500 Macro F1 results from the 12 different TDSA models can be found within [`test_f1.json` file](./results/TDSA/test_f1.json). For replication purposes we have created a [Google Colab notebook](https://github.com/apmoore1/fiesta/blob/master/notebooks/Advantages_of_Model_Selection.ipynb) which can be found here that shows how the results from the paper can be replicated. Further more this notebook is a good example of how to use the `fiesta` library when you already have results and do not need to evaluate any modles.
 
-## Citing (This will be updated when the ACL version of the paper is published)
+## Citing
+(This will be updated when the ACL version of the paper is published)
+
 If you use FIESTA in your research, please cite [FIESTA: Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms](https://arxiv.org/pdf/1906.12230.pdf)
 ```
 @article{moss2019fiesta,

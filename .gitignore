@@ -8,3 +8,6 @@ docs/build/
 docs/make.bat
 docs/source/fiesta.rst
 docs/source/modules.rst
+build/
+dist/
+fiesta_nlp.egg-info/
