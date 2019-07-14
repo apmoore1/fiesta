@@ -2,7 +2,7 @@
 [![licence](https://img.shields.io/hexpm/l/plug.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://travis-ci.org/apmoore1/fiesta.svg?branch=master)](https://travis-ci.org/apmoore1/fiesta) [![codecov](https://codecov.io/gh/apmoore1/fiesta/branch/master/graph/badge.svg)](https://codecov.io/gh/apmoore1/fiesta)
 
 ## Installing
-Currently only been tested with python version 3.6.1 and above.
+Requires Python 3.6.1 or greater.
 
 `pip install fiesta-nlp`
 
@@ -17,12 +17,24 @@ The code used to create the NER results can be founder [here](https://github.com
 ### Target Dependent Sentiment Analysis experiments
 The 500 Macro F1 results from the 12 different TDSA models can be found within [`test_f1.json` file](./results/TDSA/test_f1.json). For replication purposes we have created a Google Colab notebook which can be found here that shows how the results from the paper can be replicated. Further more this notebook is a good example of how to use the `fiesta` library when you already have results and do not need to evaluate any modles.
 
+### Citing (This will be updated when the ACL version of the paper is published)
+If you use FIESTA in your research, please cite [FIESTA: Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms](https://arxiv.org/pdf/1906.12230.pdf)
+```
+@article{moss2019fiesta,
+  title={FIESTA: Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms},
+  author={Moss, Henry B and Moore, Andrew and Leslie, David S and Rayson, Paul},
+  journal={arXiv preprint arXiv:1906.12230},
+  year={2019}
+}
+```
 
-## Contributing
-We welcome any contributions. If you would like to contribute via a feature request, ask a question, or report a bug please submit an issue and we will work with you to incorportate this into the fiesta package. We would appreciate that all pull request originate/start from an issue.
-
-### Linter
-We use the *pylint* linter of which we would like all contributions to adhere/keep to this linter.
+### General Acknowledgments
+This code base and it's related FIESTA paper could not have been done without:
+1. [Henry Moss's](https://www.lancaster.ac.uk/maths/people/henry-moss) time funded through EPSRC Doctoral Training Grant and the STOR-i Centre for Doctoral Training.
+2. [Andrew Moore's](https://apmoore1.github.io/) time funded through EPSRC Doctoral Training Grant.
+3. [Paul Rayson's](https://www.lancaster.ac.uk/staff/rayson/) and [David Leslie's](https://www.lancaster.ac.uk/people-profiles/david-leslie) time.
+4. Resources -- The loan of a NVIDIA GP100-equipped workstation from [Dr Chris Jewell](https://chicas.lancaster-university.uk/people/jewell.html) at the [Centre for Health Informatics, Computing, and Statistics, Lancaster University](https://chicas.lancaster-university.uk/).
+5. We lastly thank the comments and advise of the reviewers from ACL 2019 which has greatly improved the paper.
 
 ### Issue template Acknowledgment
 We copied/adapted the issues templates from the [allennlp](https://github.com/allenai/allennlp) project.
