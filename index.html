@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FIESTA Documentation &mdash; FIESTA 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model Selection Methods" href="api/model_selectors.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> FIESTA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/model_selectors.html">Model Selection Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fixed_budget.html">Fixed Budget (FB)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.non_adaptive_fb.html">fiesta.non_adaptive_fb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.sequential_halving.html">fiesta.sequential_halving</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/fixed_confidence.html">Fixed Confidence (FC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.non_adaptive_fc.html">fiesta.non_adaptive_fc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.TTTS.html">fiesta.TTTS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/fiesta.util.html">fiesta.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.belief_calc.html">fiesta.util.belief_calc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.fb_func_stats.html">fiesta.util.fb_func_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.fc_func_stats.html">fiesta.util.fc_func_stats</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">FIESTA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>FIESTA Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="fiesta-documentation">
+<h1>FIESTA Documentation<a class="headerlink" href="#fiesta-documentation" title="Permalink to this headline">¶</a></h1>
+<p>FIESTA (Fast IdEntification of State-of-The-Art) package as the name suggests
+allows you to easily find the <strong>best model</strong> from a set of models taking into
+account two sources of randomness <strong>data splits</strong> and <strong>random seeds</strong>.</p>
+<p>This package is also
+flexible enough to only consider the <strong>random seeds</strong> and keep the <strong>data
+splits</strong> fixed which may be required for evaluation competitions like
+<a class="reference external" href="http://alt.qcri.org/semeval2019/index.php?id=tasks">SemEval</a>.</p>
+<p>FIESTA looks at two different model selection scenarios; <strong>Fixed Budget</strong> and
+<strong>Fixed Confidence</strong>.</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#motivation-label"><span class="std std-ref">Motivation</span></a></p></li>
+<li><p><a class="reference internal" href="#model-selection-scenarios-label"><span class="std std-ref">Model Selection Scenarios</span></a></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#fixed-budget-label"><span class="std std-ref">Fixed Budget (FB)</span></a></p></li>
+<li><p><a class="reference internal" href="#fixed-confidence-label"><span class="std std-ref">Fixed Confidence (FC)</span></a></p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="#installing-label"><span class="std std-ref">Installing</span></a></p></li>
+<li><p><a class="reference internal" href="#tutorials-label"><span class="std std-ref">Tutorials</span></a></p></li>
+<li><p><a class="reference internal" href="#package-label"><span class="std std-ref">Package Reference</span></a></p></li>
+<li><p><a class="reference internal" href="#indices-and-tables-label"><span class="std std-ref">Indices and tables</span></a></p></li>
+</ol>
+</div>
+<div class="section" id="motivation">
+<span id="motivation-label"></span><h1>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h1>
+<p>When comparing a set of models there are two sources of
+randomness/stochasticity:</p>
+<ol class="arabic simple">
+<li><p>The non-determinstic model’s random seed choice during training which
+affects weight intialisation, data sub-sampling for SGD, and negative
+sampling used to train word embeddings etc.</p></li>
+<li><p>The data splits that the model was/is trained on.</p></li>
+</ol>
+<p>It has already been shown in
+<a class="reference external" href="https://www.aclweb.org/anthology/D17-1035">Reimers and Gurevych, 2017</a>
+that random seeds statistically significantly affect results. We further show
+in the <a class="reference external" href="https://arxiv.org/pdf/1906.12230.pdf">FIESTA paper (Moss et al. 2018)</a>
+that both of these need to be taken into account. This can be best seen below
+where the plots show the results of two different Named Entity Recogniser (NER)
+models, where the left plot shows the results varying both data splits and
+random seeds, where as the right plot shows results with 3 different data splits
+and 5 different seeds.</p>
+<img alt="NER results" src="_images/ner_violin_plot_with_fixed.png" />
+<p>As we can see from the right hand side plot, each plot is a different data split
+and each split has had the model evaluated 5 times with a different random seed.
+The middle and far right plots clearly shows the CNN and LSTM models winning
+respectively where as the far left is kind of a draw. This should show why
+we need to take into account random seeds and data splits when evaluating
+our models.</p>
+<div class="section" id="other-relevant-work">
+<h2>Other relevant work<a class="headerlink" href="#other-relevant-work" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://arxiv.org/pdf/1803.09578.pdf">Reimers and Gurevych, 2018</a> has already
+suggested that we should stop comparing models based on a single evaluation and
+should compare based on numerous evaluations so that we can take into account
+the random seed problem. This paper has some really good emprical reasons
+why. In the <a class="reference external" href="https://arxiv.org/pdf/1906.12230.pdf">FIESTA work</a> we don’t
+take the assumption of fixed train, develoment and test splits as we
+show that this is another source of randomness. Further more we
+show two efficent adaptive approachs of finding the best model given a
+confidence score (<a class="reference external" href="./api/TTTS.html">TTTS</a>) or budget
+(<a class="reference external" href="./api/fiesta.sequential_halving.html">Sequential Halving</a>) compared
+to the standard non-adptive approaches like the one stated in
+<a class="reference external" href="https://arxiv.org/pdf/1803.09578.pdf">Reimers and Gurevych, 2018</a>.</p>
+<p><a class="reference external" href="https://wellformedness.com/papers/gorman-bedrick-2019.pdf">Gorman and Bedrick, 2019</a>
+concurrently produced similar findings to those in the
+<a class="reference external" href="https://arxiv.org/pdf/1906.12230.pdf">FIESTA  work</a> with regards
+to taking data splits into account. They show that different data splits can
+cause the rankings of different POS tagger models to change compared to using
+the standard splits suggested for the POS datasets used. As stated eariler in
+the <a class="reference external" href="https://arxiv.org/pdf/1906.12230.pdf">FIESTA paper</a> we motivated
+the data splits using NER but now it has also been shown for POS
+tagging (both using English datasets).</p>
+<p>The FIESTA package has two different ways of finding the best model taking
+into account the data split and random seed, <a class="reference internal" href="#fixed-confidence-label"><span class="std std-ref">Fixed Confidence (FC)</span></a> (FC)
+and <a class="reference internal" href="#fixed-budget-label"><span class="std std-ref">Fixed Budget (FB)</span></a>. These are explained in more detail below and in the
+the package’s documentation as well as in the FIESTA paper.</p>
+</div>
+</div>
+<div class="section" id="model-selection-scenarios">
+<span id="model-selection-scenarios-label"></span><h1>Model Selection Scenarios<a class="headerlink" href="#model-selection-scenarios" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fixed-budget-fb">
+<span id="fixed-budget-label"></span><h2>Fixed Budget (FB)<a class="headerlink" href="#fixed-budget-fb" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="problem">
+<h3>Problem<a class="headerlink" href="#problem" title="Permalink to this headline">¶</a></h3>
+<p>Given a budget <span class="math notranslate nohighlight">\(T\)</span> and a set of models <span class="math notranslate nohighlight">\(N\)</span> can we find the best
+model <span class="math notranslate nohighlight">\(N^*\)</span> using only <span class="math notranslate nohighlight">\(T\)</span> model evaluations (runs).</p>
+</div>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h4><a class="reference external" href="./api/fiesta.non_adaptive_fb.html">fiesta.non_adaptive_fb</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>This is the standard approach where the budget <span class="math notranslate nohighlight">\(T\)</span> is spent fairly across
+all of the <span class="math notranslate nohighlight">\(N\)</span> models. The best model <span class="math notranslate nohighlight">\(N^*\)</span> would be the model that
+has the highest mean score across all of the evaluations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>Given <span class="math notranslate nohighlight">\(T=10\)</span> and <span class="math notranslate nohighlight">\(N=5\)</span> we would give each of the <span class="math notranslate nohighlight">\(N\)</span> models
+<span class="math notranslate nohighlight">\(2\)</span> evaluations each.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id4">
+<h4><a class="reference external" href="./api/fiesta.sequential_halving.html">fiesta.sequential_halving</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>Sequential Halving is the adaptive FB approach which does <strong>not</strong> spend the
+budget fairly across the <span class="math notranslate nohighlight">\(N\)</span> models but rather spends the
+budget <strong>more on promising/better models</strong>.</p>
+<p>For more details on this approach see the
+<a class="reference external" href="./api/fiesta.sequential_halving.html">Sequential Halving documentation</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Note</dt>
+<dd class="field-odd"><p>This approach has been shown to outperform the standard non-adpative FB
+approach as shown in this <a class="reference external" href="https://arxiv.org/abs/1906.12230">paper</a>
+associated to this code base and the following
+<a class="reference external" href="https://github.com/apmoore1/fiesta/blob/master/notebooks/Advantages_of_Model_Selection.ipynb">notebook tutorial</a>
+from this code based. Outperform here means that given the same budget
+<span class="math notranslate nohighlight">\(T\)</span> we are more likely to find the best model.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="fixed-confidence-fc">
+<span id="fixed-confidence-label"></span><h2>Fixed Confidence (FC)<a class="headerlink" href="#fixed-confidence-fc" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Problem<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Given a set of models <span class="math notranslate nohighlight">\(N\)</span> can we find the best model <span class="math notranslate nohighlight">\(N^*\)</span> with a
+confidence greater than or equal to <span class="math notranslate nohighlight">\((1 - p)\)</span>
+where <span class="math notranslate nohighlight">\(p\)</span> is our p-value. For example if we want to find the model that
+is the best model with 95% confidence we would set <span class="math notranslate nohighlight">\(p=0.05\)</span>.</p>
+<p>Compared to the Fixed Budget approach here we find the best model and know that
+it is the best model with <span class="math notranslate nohighlight">\((1 - p)\)</span> confidence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Caveat</dt>
+<dd class="field-odd"><p>Assumes that the evaluations scores produced by the models follow a
+Gaussian (normal) distribution. For a great guide on knowing what
+distribution your evaluation metric would produce see
+<a class="reference external" href="https://arxiv.org/pdf/1809.01448.pdf">Dror and Reichart, 2018 guide</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id6">
+<h3>Methods<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4><a class="reference external" href="./api/fiesta.non_adaptive_fc.html">fiesta.non_adaptive_fc</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>This is the standard approach where all models each round are evaluated once
+and this continous until at the end of a round one of the models is better
+than the rest by a certain confidence level. All models are evaluated the
+same number of times hence non adaptive.</p>
+</div>
+<div class="section" id="id8">
+<h4><a class="reference external" href="./api/TTTS.html">fiesta.TTTS</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>Top-Two Thompson Sampling (TTTS)
+(<a class="reference external" href="http://proceedings.mlr.press/v49/russo16.pdf">Russo, 2016</a>)
+this approach does not give each model the same number of evaluations rather it
+evaluates the models that are performing better more often.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Note</dt>
+<dd class="field-odd"><p>This approach has been shown to outperform the standard non-adpative FC
+approach as shown in this <a class="reference external" href="https://arxiv.org/abs/1906.12230">paper</a>
+associated to this code base and the following
+<a class="reference external" href="https://github.com/apmoore1/fiesta/blob/master/notebooks/Advantages_of_Model_Selection.ipynb">notebook tutorial</a>
+from this code based. Outperform here means that we find the best model
+in fewer number of evaluations/runs.</p>
+</dd>
+</dl>
+<p>For more details on this approach see the
+<a class="reference external" href="./api/fiesta.TTTS.html">TTTS documentation</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="installing">
+<span id="installing-label"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
+<p>Requires Python 3.6.1 or greater.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install fiesta-nlp
+</pre></div>
+</div>
+</div>
+<div class="section" id="tutorials">
+<span id="tutorials-label"></span><h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
+<p>Each tutorial is a runnable Google Colab notebook.</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://github.com/apmoore1/fiesta/blob/master/notebooks/Advantages_of_Model_Selection.ipynb">FIESTA paper replication</a>
+- Shows how to replicate the results from the
+FIESTA paper using static data.</p></li>
+<li><p><a class="reference external" href="https://github.com/apmoore1/fiesta/blob/master/notebooks/TDSA_AllenNLP_Example.ipynb">Custom AllenNLP models</a>
+- Shows how to use the Fixed Budget and Confidence
+methods using Custom AllenNLP models, based around the tasks in the FIESTA
+paper (Target Dependent Sentiment Analysis). Compared to the replication
+tutorial the data is not static, very much a real world example.</p></li>
+</ol>
+<div class="toctree-wrapper compound" id="package-label">
+<p class="caption"><span class="caption-text">Package Reference</span><a class="headerlink" href="#package-label" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/model_selectors.html">Model Selection Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fixed_budget.html">Fixed Budget (FB)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.non_adaptive_fb.html">fiesta.non_adaptive_fb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.sequential_halving.html">fiesta.sequential_halving</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/fixed_confidence.html">Fixed Confidence (FC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.non_adaptive_fc.html">fiesta.non_adaptive_fc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/fiesta.TTTS.html">fiesta.TTTS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/fiesta.util.html">fiesta.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.belief_calc.html">fiesta.util.belief_calc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.fb_func_stats.html">fiesta.util.fb_func_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fiesta.util.fc_func_stats.html">fiesta.util.fc_func_stats</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<span id="indices-and-tables-label"></span><h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/model_selectors.html" class="btn btn-neutral float-right" title="Model Selection Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Henry Moss and Andrew Moore
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fiesta.util &mdash; FIESTA 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FIESTA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/model_selectors.html">Model Selection Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/fixed_budget.html">Fixed Budget (FB)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/fiesta.non_adaptive_fb.html">fiesta.non_adaptive_fb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/fiesta.sequential_halving.html">fiesta.sequential_halving</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/fixed_confidence.html">Fixed Confidence (FC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/fiesta.non_adaptive_fc.html">fiesta.non_adaptive_fc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/fiesta.TTTS.html">fiesta.TTTS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/fiesta.util.html">fiesta.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/fiesta.util.belief_calc.html">fiesta.util.belief_calc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/fiesta.util.fb_func_stats.html">fiesta.util.fb_func_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/fiesta.util.fc_func_stats.html">fiesta.util.fc_func_stats</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FIESTA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>fiesta.util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fiesta.util</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">fiesta</span>
+
+<div class="viewcode-block" id="pull_arm"><a class="viewcode-back" href="../../fiesta.html#fiesta.util.pull_arm">[docs]</a><span class="k">def</span> <span class="nf">pull_arm</span><span class="p">(</span><span class="n">mean</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sd</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    :param mean: The mean of the normal distribution.</span>
+<span class="sd">    :param sd: The standard deviation of the normal distribution.</span>
+<span class="sd">    :returns: A value that has been sampled from a normal distribution that has</span>
+<span class="sd">              a mean and standard deviation of those given as arguments.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">sd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="belief_calc"><a class="viewcode-back" href="../../fiesta.html#fiesta.util.belief_calc">[docs]</a><span class="k">def</span> <span class="nf">belief_calc</span><span class="p">(</span><span class="n">est_means</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">est_variances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
+                <span class="n">eval_counts</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    :param est_means: A vector of each models mean scores </span>
+<span class="sd">                      shape: (Number of models,) </span>
+<span class="sd">    :param est_means: A vector of each models variance of there scores:</span>
+<span class="sd">                      shape: (Number of models,) </span>
+<span class="sd">    :param eval_counts: A vector stating the number of times each model has </span>
+<span class="sd">                        been evaluated/ran: shape: (Number of models,)</span>
+<span class="sd">    :param samples: Number of samples to generate from our belief distribution </span>
+<span class="sd">                    for each model. This should be large e.g. minimum 10000</span>
+<span class="sd">    :returns: The number of times a model performed best for each sample </span>
+<span class="sd">              based on each model belief distribution, normliased by the </span>
+<span class="sd">              number of samples (this is in affect the confidence for each </span>
+<span class="sd">              model of whether that model is the best model, p-value can be </span>
+<span class="sd">              calculated by 1 - the confidence value for each model). </span>
+<span class="sd">              shape (Number of models,)</span>
+<span class="sd">    :raises ValueError: If the ``eval_counts`` contains values less than 3. As </span>
+<span class="sd">                        it is required that each model has been evaluated a</span>
+<span class="sd">                        minimum of 3 times, this is due to our prior beleif </span>
+<span class="sd">                        in our algorthim.  </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">est_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">est_variances</span><span class="p">)</span>
+    <span class="n">num_models</span> <span class="o">=</span> <span class="n">eval_counts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">((</span><span class="n">eval_counts</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_models</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of times each model has been evaluated &quot;</span>
+                         <span class="s2">&quot;has to be greater than 2 or at least one of your &quot;</span>
+                         <span class="n">f</span><span class="s2">&quot;model&#39;s has been evaluated less:</span><span class="si">{eval_counts}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># generate samples from t dist with required degrees of freedom</span>
+    <span class="c1"># we subtract 2 from the number of times each model has been evaluated due </span>
+    <span class="c1"># to our prior belief about the uniform distribution.</span>
+    <span class="n">t_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_t</span><span class="p">(</span><span class="n">eval_counts</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">,</span> <span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">num_models</span><span class="p">))</span>
+    <span class="c1"># scale to get samples from posterior about means</span>
+    <span class="n">posterior_samples</span><span class="o">=</span> <span class="n">t_samples</span> <span class="o">*</span> <span class="n">est_sd</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">eval_counts</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">))</span> <span class="o">+</span> <span class="n">est_means</span>
+    <span class="c1"># find argmax for each set of samples</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">posterior_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># count raw frequencies of maximum over samples</span>
+    <span class="n">max_model_index</span><span class="p">,</span> <span class="n">num_times_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">pi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_models</span>
+    <span class="k">for</span> <span class="n">model_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_models</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model_index</span> <span class="ow">in</span> <span class="n">max_model_index</span><span class="p">:</span>
+            <span class="n">num_times_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">max_model_index</span><span class="o">==</span><span class="n">model_index</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pi</span><span class="p">[</span><span class="n">model_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_times_max</span><span class="p">[</span><span class="n">num_times_index</span><span class="p">]</span> <span class="o">/</span> <span class="n">samples</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pi</span><span class="p">[</span><span class="n">model_index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">/</span> <span class="n">samples</span>
+    <span class="k">return</span> <span class="n">pi</span></div>
+
+<div class="viewcode-block" id="lists_same_size"><a class="viewcode-back" href="../../fiesta.html#fiesta.util.lists_same_size">[docs]</a><span class="k">def</span> <span class="nf">lists_same_size</span><span class="p">(</span><span class="o">*</span><span class="n">lists</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Checks if the lists given as arguments are of the same size, if not it </span>
+<span class="sd">    raises a ValueError.</span>
+
+<span class="sd">    :raises ValueError: If any of the lists are not the same size</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">list_length</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">_list</span> <span class="ow">in</span> <span class="n">lists</span><span class="p">:</span>
+        <span class="n">current_list_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">list_length</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">list_length</span> <span class="o">=</span> <span class="n">current_list_length</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">list_length</span> <span class="o">!=</span> <span class="n">current_list_length</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The lists are not of the same size: </span><span class="si">{lists}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="fc_func_stats"><a class="viewcode-back" href="../../fiesta.html#fiesta.util.fc_func_stats">[docs]</a><span class="k">def</span> <span class="nf">fc_func_stats</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">correct_model_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
+                  <span class="n">fc_func_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">fc_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    :param N: Number of times to run the Fixed Confidence (FC) function</span>
+<span class="sd">    :param correct_model_index: The index of the best model</span>
+<span class="sd">    :param model_funcs: Functions that will generated model evaluation scores</span>
+<span class="sd">    :param fc_func_name: The name of the FC function being evaluated e.g. </span>
+<span class="sd">                        `non_adaptive_fc` or `TTTS`</span>
+<span class="sd">    :param fc_kwargs: Keyword arguments to give to the FC function.</span>
+<span class="sd">    :returns: Tuple containing: </span>
+<span class="sd">              </span>
+<span class="sd">              1. min</span>
+<span class="sd">              2. mean</span>
+<span class="sd">              3. max</span>
+<span class="sd">              4. percentage correct </span>
+<span class="sd">              </span>
+<span class="sd">              Where the first 3 relate to the number of evaluations the FC </span>
+<span class="sd">              function required to get to the confidence level required. </span>
+<span class="sd">              The last is the percentage of those runs where the most </span>
+<span class="sd">              confident model was the correct model determined by the </span>
+<span class="sd">              ``correct_model_index`` argument.</span>
+<span class="sd">    :raises ValueError: If the ``fc_func_name`` is not in the list of acceptable </span>
+<span class="sd">                        FC function names.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># Get FC function</span>
+    <span class="n">fc_func_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TTTS&#39;</span><span class="p">,</span> <span class="s1">&#39;non_adaptive_fc&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">fc_func_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fc_func_names</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The FC function name given </span><span class="si">{fc_func_name}</span><span class="s1"> is not &#39;</span>
+                        <span class="n">f</span><span class="s1">&#39;the list of acceptable function names </span><span class="si">{fc_func_names}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fc_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fiesta</span><span class="p">,</span> <span class="n">fc_func_name</span><span class="p">)</span>
+    
+    <span class="c1"># Run the FC function N times and count the number of times </span>
+    <span class="c1"># the best model was correctly chosen</span>
+    <span class="n">number_correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_num_evals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="n">conf_scores</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">num_evals</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fc_func</span><span class="p">(</span><span class="o">**</span><span class="n">fc_kwargs</span><span class="p">)</span>
+        <span class="n">total_num_evals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_evals</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">conf_scores</span><span class="p">)</span> <span class="o">==</span> <span class="n">correct_model_index</span><span class="p">:</span>
+            <span class="n">number_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># Summary stats</span>
+    <span class="n">_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">total_num_evals</span><span class="p">)</span>
+    <span class="n">_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">total_num_evals</span><span class="p">)</span>
+    <span class="n">_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">total_num_evals</span><span class="p">)</span>
+    <span class="n">perecent_correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">number_correct</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">_min</span><span class="p">,</span> <span class="n">_mean</span><span class="p">,</span> <span class="n">_max</span><span class="p">,</span> <span class="n">perecent_correct</span></div>
+
+<div class="viewcode-block" id="fb_func_stats"><a class="viewcode-back" href="../../fiesta.html#fiesta.util.fb_func_stats">[docs]</a><span class="k">def</span> <span class="nf">fb_func_stats</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">correct_model_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
+                  <span class="n">fb_func_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">fb_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    :param N: Number of times to run the Fixed Budget (FB) function.</span>
+<span class="sd">    :param correct_model_index: The index of the best model.</span>
+<span class="sd">    :param fb_func_name: The name of the FB function being evaluated e.g. </span>
+<span class="sd">                         `sequential_halving` or `non_adaptive_fb`</span>
+<span class="sd">    :param fb_kwargs: Keyword arguments to give to the FB function.</span>
+<span class="sd">    :returns: The probability the best model was correctly identified by the </span>
+<span class="sd">              FB function across the N runs.</span>
+<span class="sd">    :raises ValueError: If the ``fb_func_name`` is not in the list of acceptable </span>
+<span class="sd">                        FB function names.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># Get FB function</span>
+    <span class="n">fb_func_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sequential_halving&#39;</span><span class="p">,</span> <span class="s1">&#39;non_adaptive_fb&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">fb_func_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fb_func_names</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The FB function name given </span><span class="si">{fb_func_name}</span><span class="s1"> is not &#39;</span>
+                        <span class="n">f</span><span class="s1">&#39;the list of acceptable function names </span><span class="si">{fb_func_names}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fb_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fiesta</span><span class="p">,</span> <span class="n">fb_func_name</span><span class="p">)</span>
+
+    <span class="c1"># Run the FB function N times and count the number of times </span>
+    <span class="c1"># the best model was correctly chosen</span>
+    <span class="n">number_correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="n">fb_return</span> <span class="o">=</span> <span class="n">fb_func</span><span class="p">(</span><span class="o">**</span><span class="n">fb_kwargs</span><span class="p">)</span>
+        <span class="n">pred_best_model_index</span> <span class="o">=</span> <span class="n">fb_return</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">pred_best_model_index</span> <span class="o">==</span> <span class="n">correct_model_index</span><span class="p">:</span>
+            <span class="n">number_correct</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">probability_correct</span> <span class="o">=</span> <span class="n">number_correct</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">probability_correct</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Henry Moss and Andrew Moore
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

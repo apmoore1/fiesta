@@ -1,0 +1,29 @@
+fiesta package
+==============
+
+Submodules
+----------
+
+fiesta.fiesta module
+--------------------
+
+.. automodule:: fiesta.fiesta
+   :members:
+   :undoc-members:
+   :show-inheritance:
+fiesta.util module
+------------------
+
+.. automodule:: fiesta.util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: fiesta
+   :members:
+   :undoc-members:
+   :show-inheritance:

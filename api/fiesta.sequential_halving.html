@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fiesta.sequential_halving &mdash; FIESTA 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fixed Confidence (FC)" href="fixed_confidence.html" />
+    <link rel="prev" title="fiesta.non_adaptive_fb" href="fiesta.non_adaptive_fb.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> FIESTA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="model_selectors.html">Model Selection Methods</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fixed_budget.html">Fixed Budget (FB)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fiesta.non_adaptive_fb.html">fiesta.non_adaptive_fb</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">fiesta.sequential_halving</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fixed_confidence.html">Fixed Confidence (FC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fiesta.non_adaptive_fc.html">fiesta.non_adaptive_fc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fiesta.TTTS.html">fiesta.TTTS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fiesta.util.html">fiesta.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fiesta.util.belief_calc.html">fiesta.util.belief_calc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fiesta.util.fb_func_stats.html">fiesta.util.fb_func_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fiesta.util.fc_func_stats.html">fiesta.util.fc_func_stats</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FIESTA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="model_selectors.html">Model Selection Methods</a> &raquo;</li>
+        
+          <li><a href="fixed_budget.html">Fixed Budget (FB)</a> &raquo;</li>
+        
+      <li>fiesta.sequential_halving</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/fiesta.sequential_halving.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="fiesta-sequential-halving">
+<h1>fiesta.sequential_halving<a class="headerlink" href="#fiesta-sequential-halving" title="Permalink to this headline">¶</a></h1>
+<p>Sequential Halving is the adaptive FB approach which does <strong>not</strong> spend the
+budget fairly across the <span class="math notranslate nohighlight">\(N\)</span> models but rather spends the
+budget <strong>more on promising/better models</strong>.</p>
+<p>It breaks the problem down into rounds of <span class="math notranslate nohighlight">\(\log_2N\)</span>, where in each round
+half of the worse performing models are removed from the canditae models
+<span class="math notranslate nohighlight">\(S\)</span> until only the best performing model is left (At the start the number
+of candiate models <span class="math notranslate nohighlight">\(S\)</span> = <span class="math notranslate nohighlight">\(N\)</span>). In each round each model is
+evaluated <span class="math notranslate nohighlight">\(\lfloor\frac{T}{|S|\lceil\log_2N\rceil}\rfloor\)</span>. The models
+performance each round is based on the models evaluations across all of the
+rounds. In the last round of 2 models each model is
+evaluated <span class="math notranslate nohighlight">\(2^{\lceil\log_2N\rceil}-1\)</span> times.</p>
+<p><em>Example:</em></p>
+<p><span class="math notranslate nohighlight">\(T=16\)</span>, <span class="math notranslate nohighlight">\(N=4\)</span>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 50%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Round</p></th>
+<th class="head"><p>Candidate Models</p></th>
+<th class="head"><p>#Evaluations</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>S = {m1, m2, m3, m4}</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>S = {m2, m4}</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>output</p></td>
+<td><p>S = {m2}</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="field-list simple">
+<dt class="field-odd">Caveat</dt>
+<dd class="field-odd"><p>The metric the evaluations produce must be bounded which is typical for a
+lot of the metrics in NLP e.g. <span class="math notranslate nohighlight">\([0,1]\)</span> for accuracy, recall, precision,
+and F1. This caveat is to ensure strong theoretical guarantees of choosing the
+best model
+(<a class="reference external" href="http://proceedings.mlr.press/v28/karnin13.pdf">Karnin et al. 2013</a>).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Note</dt>
+<dd class="field-odd"><p>This approach has been shown to outperform the standard non-adpative FB
+approach as shown in this <a class="reference external" href="https://arxiv.org/abs/1906.12230">paper</a>
+associated to this code base and the following
+<a class="reference external" href="https://github.com/apmoore1/fiesta/blob/master/notebooks/Advantages_of_Model_Selection.ipynb">notebook tutorial</a>
+from this code based. Outperform here means that given the same budget
+<span class="math notranslate nohighlight">\(T\)</span> we are more likely to find the best model.</p>
+</dd>
+</dl>
+<dl class="function">
+<dt>
+<code class="sig-prename descclassname">fiesta.fiesta.</code><code class="sig-name descname">sequential_halving</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">model_functions</em>, <em class="sig-param">split_function</em>, <em class="sig-param">budget</em>, <em class="sig-param">logit_transform=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fiesta/fiesta.html#sequential_halving"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]) – A list of dictionaries, that as a whole represents the entire 
+dataset. Each dictionary within the list represents 
+one sample from the dataset.</p></li>
+<li><p><strong>model_functions</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Callable" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]], <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]], <a class="reference external" href="https://docs.python.org/3.6/library/functions.html#float" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]) – A list of functions that represent different 
+models e.g. pytorch model. Which take a train and  
+test dataset as input and returns a metric score 
+e.g. Accuracy. The model functions should not have 
+random seeds set else it defeats the point of 
+finding the best model independent of the random 
+seed and data split.</p></li>
+<li><p><strong>split_function</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Callable" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]], <code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]], <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Dict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Any" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]]]) – A function that can be used to split the data into 
+train and test splits. This should produce random 
+splits each time it is called. If you would like to 
+use a fixed split each time, you can hard code this 
+function to produce a fixed split each time.</p></li>
+<li><p><strong>budget</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – The total number of evaluations</p></li>
+<li><p><strong>logit_transform</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether to transform the model function’s returned 
+metric score by the logit function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#float" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>], <a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.List" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#float" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Tuple containing 3 values:</p>
+<ol class="arabic simple">
+<li><p>The best performing model function index given the budget</p></li>
+<li><p>The number of times each model was evaluated as a proportion 
+of the total number of evaluations</p></li>
+<li><p>The scores that each model generated when evaluated.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">NOTE</dt>
+<dd class="field-odd"><p>That if the logit transform is True then the last item in 
+the tuple would be scores that have been transformed by 
+the logit function.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><strong>ValueError</strong></a> – Given budget <span class="math notranslate nohighlight">\(T\)</span> and the models <span class="math notranslate nohighlight">\(N\)</span> this 
+will be raised if: <span class="math notranslate nohighlight">\(T &lt; (|N| * \log_2|N|)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fixed_confidence.html" class="btn btn-neutral float-right" title="Fixed Confidence (FC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fiesta.non_adaptive_fb.html" class="btn btn-neutral float-left" title="fiesta.non_adaptive_fb" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Henry Moss and Andrew Moore
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

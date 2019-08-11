@@ -1,0 +1,7 @@
+fiesta
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   fiesta
