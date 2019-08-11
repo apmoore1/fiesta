@@ -25,7 +25,7 @@ The 500 Macro F1 results from the 12 different TDSA models can be found within [
 ## Citing
 (This will be updated when the ACL version of the paper is published)
 
-If you use FIESTA in your research, please cite [FIESTA: Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms](https://arxiv.org/pdf/1906.12230.pdf)
+If you use FIESTA in your research, please cite [FIESTA: Fast IdEntification of State-of-The-Art models using adaptive bandit algorithms](https://www.aclweb.org/anthology/P19-1281)
 ```
 @inproceedings{moss-etal-2019-fiesta,
     title = "{FIESTA}: Fast {I}d{E}ntification of State-of-The-Art models using adaptive bandit algorithms",
